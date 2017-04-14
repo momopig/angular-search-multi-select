@@ -1,0 +1,33 @@
+<div class="selection create-export-task-input right-part">
+    <div   class="right-part fa  form-group " ng-class="{'has-error':false, 'fa-angle-down':!viewSettings.showMenu, 'fa-angle-up':viewSettings.showMenu}"  >
+        <div class="input-box clearfix form-control" ng-class="{'has-selected-type':choosedArr.length != 0}">
+            <span class="type-name-box " ng-repeat="typeItem in choosedArr"  ng-click="delSelectedType(typeItem);$event.stopPropagation()"><span class="type-name-text text-ellipsis" title="{{::typeItem.name}}">{{::typeItem.name}}</span><span class="close-btn">x</span></span>
+            <input id="searchDataType" ng-class="choosedArr.length === 0?'form-control cover-father':'reset-form-control'" ng-style="{width:(choosedArr.length != 0 && choosedArr.length %2 === 0) && '100%', marginTop: (choosedArr.length > 2) && '4px'}" placeholder="{{choosedArr.length === 0? '请输入数据类型': ''}}" ng-model="viewSettings.searchDataTypeName" ng-focus="viewSettings.showMenu = true" ng-change="searchDataType(viewSettings.searchDataTypeName)"/>
+        </div>
+        <ul class="type-select-panel" ng-show="viewSettings.showMenu && viewSettings.searchDataTypeName === ''">
+            <li class="select-block" ng-repeat="v in selectOptionsConfig.tree">
+                <div class="cmb-checkbox fa reset-fa" ng-class="showList?'fa-angle-up':'fa-angle-down'" ng-click="showList =  !showList;">
+                    <input id="{{v.name}}" type="checkbox" ng-model="v.isChecked" ng-change="setSelectLength(v)" ng-click="$event.stopPropagation()">
+                    <label ng-bind="v.name" ></label>
+                </div>
+                <ul class="leaf-node-list" ng-show="showList">
+                    <li class="cmb-checkbox leaf-cmb-checkbox clearfix"  ng-repeat="item in v.sub" >
+                        <input id="{{item.name}}" type="checkbox" ng-model="item.isChecked" ng-change="setSelectLength(item)">
+                        <label for="{{item.name}}" ng-bind="item.name" ></label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="type-select-panel" ng-show="viewSettings.showMenu &&(viewSettings.searchDataTypeName != '') && (tree_search_result.length !== 0)">
+            <li class="select-block" ng-repeat="item in tree_search_result" >
+                <ul class="leaf-node-list">
+                    <li class="cmb-checkbox leaf-cmb-checkbox  clearfix"  >
+                        <input id="{{item.name}}" type="checkbox" ng-model="item.isChecked" ng-change="setSelectLength(item)">
+                        <label for="{{item.name}}" ng-bind="item.name" ></label>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div class="no-data-tips" ng-show="viewSettings.showMenu &&viewSettings.searchDataTypeName != ''&& (tree_search_result.length === 0)"> 无匹配数据</div>
+    </div>
+</div>

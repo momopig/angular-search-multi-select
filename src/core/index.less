@@ -1,0 +1,397 @@
+/* reset START */
+ul {
+  list-style: none;
+}
+* {
+  padding: 0;
+  margin: 0;
+}
+.text-ellipsis{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* reset END */
+/*
+@import (reference) "cmb-colors.less";
+*/
+.cmb-checkbox {
+  @checkbox-size: 1.2em;
+  position: relative;
+  >label {
+    &:before {
+      content: '';
+      position: absolute;
+      display: inline-block;
+      visibility: visible;
+      width: 14px;
+      height: 14px;
+      top: 3px;
+      left: 0px;
+      background: url(./images/checkbox-unchecked.svg) no-repeat;
+      background-size: cover;
+    }
+  }
+  >input[type="checkbox"],  >input[type="radio"]{
+    vertical-align: middle;
+    visibility: hidden;
+    width: @checkbox-size;
+    height: @checkbox-size;
+
+  }
+  >input[type=checkbox]:checked + label, >input[type=radio]:checked + label {
+    &:before {
+      background: url(./images/checkbox-checked.svg) no-repeat;
+      background-size: cover;
+    }
+  }
+}
+
+.create-export-task-input{
+  position: relative;
+  width: 256px;
+  >.right-part{
+    width: 100%;
+    margin-bottom: 0 !important;
+  }
+  .type-select-panel{
+    position: absolute;
+    z-index: 99;
+    background: #fff;
+    width: 100%;
+    max-height: 200px;
+    margin-top: 4px;
+    border: 1px solid #E3E3E4;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius:2px;
+    overflow: auto;
+    .select-block{
+
+      .cmb-checkbox{
+        display: inline-block;
+        cursor: pointer;
+        width: 100%;
+        height: 26px;
+        line-height: 26px;
+        &:hover{
+          background: #FAFAFA;
+        }
+        input[type = "checkbox"]{
+          position: absolute;
+          z-index: 9999;
+          left: .8rem;
+          display: inline-block;
+          vertical-align: middle;
+          visibility: visible;
+          opacity: 0;
+          width: 1.2em;
+          height: 1.2em;
+        }
+        label{
+          position: relative;
+          float: none;
+          padding-left: 1.6rem;
+          display: inline-block;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          line-height: normal;
+          -moz-text-overflow: ellipsis;
+          -o-text-overflow:ellipsis;
+          width: auto;
+          height: 26px;
+          line-height: 26px;
+          margin: 0 0 0 10px;
+        }
+        label:before{
+          top: 50%;
+          margin-top: -7px;
+        }
+
+      }
+      .leaf-cmb-checkbox{
+        width: 100%;
+        padding-left: 25px;
+      }
+
+      .leaf-node-list{
+      }
+    }
+
+  }
+
+}
+.create-export-task-input {
+  .no-data-tips{
+    position: absolute;
+    z-index: 999;
+    background: #fff;
+    width: 100%;
+    text-align: center;
+    height: 28px;
+    line-height: 28px;
+    margin-top: 4px;
+    border: 1px solid #dedede;
+  }
+
+  .input-box{
+    height: 35px;
+    .type-name-box{
+      position: relative;
+      float: left;
+      width: 100px;
+      height: 21px;
+      line-height: 21px;
+      background: #eee;
+      border-radius: 5px;
+      margin: 4px 8px 0 0;
+      text-align: left;
+      padding-left: 8px;
+      cursor: pointer;
+      .type-name-text{
+        display: inline-block;
+        width: 80px;
+      }
+      .close-btn{
+        position: absolute;
+        right: 4px;
+      }
+    }
+    .cover-father{
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .reset-form-control{
+      width: 100px;
+      float: left;
+      min-height: 0;
+      height: 21px;
+      line-height: 21px;
+      margin: 0px 8px 0 0;
+      border: none;
+      outline: none;
+    }
+  }
+  .has-selected-type{
+    height: auto;
+  }
+  .type-name-box:nth-child(1), .type-name-box:nth-child(2){
+    margin-top: 0;
+  }
+  .type-select-panel{
+    position: absolute;
+    z-index: 99;
+    background: #fff;
+    width: 100%;
+    max-height: 200px;
+    margin-top: 4px;
+    border: 1px solid #E3E3E4;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius:2px;
+    overflow: auto;
+    .select-block{
+
+      .cmb-checkbox{
+        display: inline-block;
+        cursor: pointer;
+        width: 100%;
+        height: 26px;
+        line-height: 26px;
+        &:hover{
+          background: #FAFAFA;
+        }
+        input[type = "checkbox"]{
+          position: absolute;
+          z-index: 9999;
+          left: .8rem;
+          display: inline-block;
+          vertical-align: middle;
+          visibility: visible;
+          opacity: 0;
+          width: 1.2em;
+          height: 1.2em;
+        }
+        label{
+          position: relative;
+          float: none;
+          padding-left: 1.6rem;
+          display: inline-block;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          line-height: normal;
+          -moz-text-overflow: ellipsis;
+          -o-text-overflow:ellipsis;
+          width: auto;
+          height: 26px;
+          line-height: 26px;
+          margin: 0 0 0 10px;
+        }
+        label:before{
+          top: 50%;
+          margin-top: -7px;
+        }
+
+      }
+      .leaf-cmb-checkbox{
+        width: 100%;
+        padding-left: 25px;
+      }
+
+      .leaf-node-list{
+      }
+    }
+
+  }
+  .create-export-task-body{
+    margin-top: 8px;
+
+  }
+
+  .create-export-task-footer{
+    padding-top: 10px;
+  }
+  .create-export-task-input{
+    width: 256px;
+    >.right-part{
+      width: 100%;
+      margin-bottom: 0 !important;
+    }
+  }
+  .import-type-field{
+    position: relative;
+    min-height: 35px;
+    margin-bottom: 47px !important;
+    .selection{
+      background: #fff;
+    }
+  }
+  .import-time-field{
+    height: 14px;
+    line-height: 14px;
+    >label{
+      line-height: 14px !important;
+    }
+    .right-part{
+      .radio-inline{
+        position: relative;
+        color: #999
+      }
+      input[type="radio"]{
+        position: absolute;
+        top: 50%;
+        margin-top: -7.5px;
+        width: auto;
+        display: inline-block;
+        height: auto;
+        min-height: auto;
+        margin-right: 8px;
+      }
+    }
+
+  }
+  .form-list > li {
+    &:after {
+      content: ' ';
+      clear: both;
+    }
+    margin-bottom: 25px;
+    label {
+
+      float: left;
+      width: 105px;
+      margin: 0;
+      text-align: right;
+      line-height: 35px;
+      font-size: 14px;
+      color: #747474;
+    }
+
+    >div {
+      overflow: visible;
+      position: relative;
+      margin-left: 106px;
+      input {
+        min-height: 35px;
+        display: block;
+        width: 256px;
+        height: 100%;
+
+        & ~ .clear {
+          position: absolute;
+          width: 14px;
+          height: 14px;
+          right: 10px;
+          top: 10px;
+        }
+      }
+    }
+
+    .fa {
+      position: relative;
+      &:before {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: #BDBDBD;
+      }
+    }
+    .reset-fa{
+      &:before {
+        top: 0;
+        right: 8px;
+      }
+    }
+
+    .selection {
+      [uib-dropdown] {
+        display: block;
+      }
+
+      [uib-dropdown-toggle] {
+        width: 100%;
+        height: 35px;
+        display: block;
+        color: inherit;
+        text-decoration: none;
+        &:before {
+          float: right;
+        }
+      }
+
+      .dropdown-menu {
+        width: 100%;
+        overflow: auto;
+        max-height: 200px;
+      }
+    }
+
+    .tip {
+      font-size: 12px;
+      margin: 0;
+      margin-top: 4px;
+      color: #999;
+      position: absolute;
+      top: 100%;
+    }
+  }
+
+  .search-ret {
+    border-top: 1px solid #F6F6F6;
+    padding-top: 20px;
+    margin-top: 20px;
+    text-align: center;
+    strong {
+      color: #666;
+      font-weight: normal;
+    }
+    span {
+      color: #999;
+      font-size: 12px;
+    }
+  }
+}
