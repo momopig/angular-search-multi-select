@@ -10,30 +10,14 @@ module.exports = function (mod) {
             restrict: 'EA',
             scope: {
                 selectOptionsConfig: '='
-            //     $scope.selectOptionsConfig.tree = {
-            //     "全部数据":{sub:[],isChecked: false, selectedNum: 0},
-            //     "工商数据":{sub: [{type:"工商基本信息", isChecked: false},{type:"工商股东信息", isChecked: false},{type:"工商主要人员", isChecked: false},{type:"工商分支机构", isChecked: false}, {type:"工商信息变更", isChecked: false}], isChecked: false, selectedNum: 0},
-            //     "法律涉诉信息":{sub: [{type:"裁判文书", isChecked: false},{type:"法院公告", isChecked: false},{type:"开庭公告", isChecked: false},{type:"审判流程", isChecked: false}, {type:"失信被执行人信息", isChecked: false}, {type:"执行信息", isChecked: false}], isChecked: false, selectedNum: 0},
-            //     "行政处罚数据":{sub: [{type:"行政处罚", isChecked: false},{type:"欠税信息", isChecked: false},{type:"网贷黑名单", isChecked: false}], isChecked: false, selectedNum: 0},
-            //     "舆情类数据":{sub: [{type:"新闻", isChecked: false}],  isChecked: false, selectedNum: 0},
-            //     "企业发展信息":{sub: [{type:"专利信息", isChecked: false}], isChecked: false, selectedNum: 0},
-            //     "上市公司信息":{sub: [{type:"上市公司基本信息",isChecked: false},{type:"上市公告信息", isChecked: false},{type:"上市公司财报", isChecked: false},{type:"上市公司财报-利润表", isChecked: false},{type:"上市公司财报-资产负债表", isChecked: false}, {type:"上市公司财报-现金流量表", isChecked: false}, {type:"上市公司财报-公司综合能力指标", isChecked: false}], isChecked: false, selectedNum: 0},
-            //     "招投标信息":{sub: [{type:"招标信息", isChecked: false},{type:"中标信息", isChecked: false}, {type:"PPP项目库", isChecked: false}], isChecked: false, selectedNum: 0},
-            //     "投资基金信息":{sub: [{type:"并购事件", isChecked: false},{type:"融资事件", isChecked: false},{type:"投资事件", isChecked: false},{type:"上市事件", isChecked: false}, {type:"退出事件", isChecked: false}, {type:"投资机构", isChecked: false},  {type:"投资基金", isChecked: false},{type:"因果树-公司信息", isChecked: false}], isChecked: false, selectedNum: 0},
-            //     "地产营销信息":{sub: [{type:"吉屋网房价", isChecked: false},{type:"土地项目转让", isChecked: false},{type:"土地招拍挂", isChecked: false},{type:"小区信息-安居客", isChecked: false}, {type:"小区信息-链家", isChecked: false}, {type:"在售房源-安居客", isChecked: false},  {type:"在售房源-链家", isChecked: false}], isChecked: false, selectedNum: 0}
-            // };
             },
             template: require('./index.html'),
             controller: ['$scope', function($scope) {
-                $scope.selectNodeType = {};
-                //{'法律涉诉信息'}
-                $scope.selectDestType = {};
-                $scope.choosed = '';
-                $scope.choosedArr = [];
 
-                $scope.dataTypes = [];
+                const SUB_PROPERTY_TYPE_ERROR_TIPS = '配置对象有误,当前dir节点没有sub字段,或者sub字段的类型不是数组';
+                $scope.selectOptionsConfig.selectedOptionsArr = [];
                 $scope.viewSettings = {
-                    searchDataTypeName : '',
+                    searchOptionName : '',
                     showMenu: false
                 };
                 $scope.tree_search_result =  $scope.selectOptionsConfig.tree;
@@ -42,21 +26,38 @@ module.exports = function (mod) {
                  * @desc 根据目录节点的checkbox选中状态(全选和非全选), 统一设置目录节点的所有子节点的选中状态
                  *
                  * */
-                var setSubTypes = function(optionObj){
-                    for(var i = 0, l = optionObj.sub.length; i < l; i++){
-                        optionObj.sub[i].isChecked = optionObj.isChecked;
-                    };
+                var setLeafNodeStatus = function(optionObj){
+                    if (angular.isArray(optionObj.sub) ) {
+                        for(var i = 0, l = optionObj.sub.length; i < l; i++){
+                            optionObj.sub[i].isChecked = optionObj.isChecked;
+                        };
+                    } else {
+                        console.log('可能有误的option项:'  + JSON.stringify(optionObj));
+                        throw new Error(SUB_PROPERTY_TYPE_ERROR_TIPS);
+                    }
+
                 };
                 /**
-                 * @desc 根据目录节点的checkbox选中状态(全选和非全选), 设置目录节点的子节点选中的个数(selectedNum)
-                 * @param nodeType string 用于区分点击的节点是目录节点,还是叶子节点
-                 * @param dirTypeName string 目录节点名称
+                 *
+                 * @desc 当option列表中,某个option的选中状态发生变化时,同步更新其上下游的option
+                 *
+                 * @param { Object } 被点击且状态更改的option选项
+                 *
+                 * @return 没有返回值,直接更新selectOptionsConfig(tree、selectedOptionArr)
                  *
                  * */
-                $scope.setSelectLength = function(optionObj){
+                $scope.updateTreeObj = function(optionObj){
                     if(optionObj.nodeType === 'dir'){
+
                         if(optionObj.isChecked){
-                            optionObj.selectedNum = optionObj.sub.length;
+
+                            if (angular.isArray(optionObj.sub) ) {
+                                optionObj.selectedNum = optionObj.sub.length;
+                            } else {
+                                console.log('可能有误的option项:'  + JSON.stringify(optionObj));
+                                throw new Error(SUB_PROPERTY_TYPE_ERROR_TIPS);
+                            }
+
                             if($scope.selectOptionsConfig.hasAllOption) {
                                 $scope.selectOptionsConfig.tree[optionObj.parentIndex].selectedNum++;
                                 if($scope.selectOptionsConfig.tree[optionObj.parentIndex].selectedNum === $scope.selectOptionsConfig.tree.length - 1){
@@ -70,33 +71,63 @@ module.exports = function (mod) {
                                 $scope.selectOptionsConfig.tree[optionObj.parentIndex].isChecked = false;
                             }
                         }
-                        setSubTypes(optionObj);
+
+                        setLeafNodeStatus(optionObj);
+
                     }else if(optionObj.nodeType === 'leaf'){
+
+                        //parentIndex为undefined,说明当前option是2级option, 且没有all option选项, 无父无子,不修改同步更新父和子;all option是1级option, dir和dir同级的option是2级option, dir下的leaf option是3级option
+                        if (optionObj.parentIndex === undefined) {
+                            return;
+                        }
                         if(optionObj.isChecked){
+
                             $scope.selectOptionsConfig.tree[optionObj.parentIndex].selectedNum++;
-                            //子节点全部被选中时,目录节点的checkbox则为true
-                            if($scope.selectOptionsConfig.tree[optionObj.parentIndex].selectedNum === $scope.selectOptionsConfig.tree[optionObj.parentIndex].sub.length){
-                                $scope.selectOptionsConfig.tree[optionObj.parentIndex].isChecked = true;
+                            if($scope.selectOptionsConfig.tree[optionObj.parentIndex].nodeType === 'all') {
+                                if ($scope.selectOptionsConfig.tree[optionObj.parentIndex].selectedNum === ($scope.selectOptionsConfig.tree.length -1)) {
+                                    $scope.selectOptionsConfig.tree[optionObj.parentIndex].isChecked = true;
+                                }
+                            } else {
+
+                                //子节点全部被选中时,目录节点的checkbox则为true
+                                if($scope.selectOptionsConfig.tree[optionObj.parentIndex].selectedNum === $scope.selectOptionsConfig.tree[optionObj.parentIndex].sub.length){
+                                    $scope.selectOptionsConfig.tree[optionObj.parentIndex].isChecked = true;
+                                    if($scope.selectOptionsConfig.hasAllOption){
+                                        $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].selectedNum++;
+                                        if ($scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].selectedNum === ($scope.selectOptionsConfig.tree.length -1)) {
+                                            $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].isChecked = true;
+                                        }
+                                    }
+                                }
                             }
                         }else{
-                            $scope.selectOptionsConfig.tree[optionObj.parentIndex].selectedNum--;
-                            //有一个子节点不选中时,目录节点的checkbox则为false
+                            if($scope.selectOptionsConfig.tree[optionObj.parentIndex].nodeType === 'dir') {    //如果父节点是dir option
+
+                                //如果父节点(dir节点)在没有更改状态前,是选中的,那么改为不选中之后,还需要修改all option,这里先提前修改all option
+                                if($scope.selectOptionsConfig.tree[optionObj.parentIndex].isChecked){
+                                    $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].selectedNum--;
+                                    $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].isChecked = false;
+                                }
+                            }
+
                             $scope.selectOptionsConfig.tree[optionObj.parentIndex].isChecked = false;
-                            $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].isChecked = false;
+                            $scope.selectOptionsConfig.tree[optionObj.parentIndex].selectedNum--;
                         }
                     }else if(optionObj.nodeType === 'all'){
+
+                        //点击了一次all option, 可理解为点击了所有2级option,通过更新2级option来更新all option
                         $scope.selectOptionsConfig.tree.forEach(function(item, index) {
                             if(item.nodeType === 'all'){
                                 return;
                             }
                             item.isChecked = optionObj.isChecked;
-                            //此时$index为$scope.selectOptionsConfig.allOptionIndex
-                            $scope.setSelectLength(item);
+                            $scope.updateTreeObj(item);
                         });
 
                     }
                 };
-                $scope.searchDataType = function(optionName){
+
+                $scope.searchOptions = function(optionName){
                     $scope.tree_search_result = [];
                     if(optionName === '' || optionName === undefined){
                         $scope.tree_search_result = $scope.selectOptionsConfig.tree;
@@ -108,7 +139,7 @@ module.exports = function (mod) {
                                 $scope.tree_search_result.push(item);
                             }
                         } else if (item.nodeType === 'dir') {
-                            if(!Array.isArray(item.sub)) {
+                            if(!angular.isArray(item.sub)) {
                                 return;
                             }
                             for(var i = 0, l = item.sub.length; i < l; i++){
@@ -119,92 +150,48 @@ module.exports = function (mod) {
                         }
 
                     });
- 
-                };
-                var getAllTypes = function(){
 
                 };
-
-                /**
-                 * @desc
-                 *@param selectNodeType object 例子为{"裁判文书":true,"法院公告":false,"开庭公告":false,"审判流程":true}
-                 * */
-                var getDataTypesString = function(){
-                    var array = [];
-                    for(var key in $scope.selectOptionsConfig.tree){
-                        if(key === '全部数据'){
-                            continue;
-                        }
-                        for(var i = 0, l = $scope.selectOptionsConfig.tree[key].sub.length; i < l; i++){
-                            var leafTypeItem = $scope.selectOptionsConfig.tree[key].sub[i];
-                            if(leafTypeItem.isChecked){
-                                array.push(leafTypeItem.name);
-                            }
-                        }
-                    }
-                    return array.join(',');
-                };
-                $scope.closeDataTypePanel = function($event){
-                    var target = $event.target;
-                    if($(target).parents('.type-select-panel').length === 0 && $(target).parents('.input-box').length === 0){
-                        $scope.viewSettings.showMenu = false;
-                    }
-                }
+                
                 /**
                  * @desc 用于删除数据类型输入域中选中的字段(每个字段对应一个删除按钮),字段分为三类:全部数据(all)、目录节点(dir)和叶子节点(leaf)
                  *
                  * */
-                $scope.delSelectedType = function(typeItem){
+                $scope.delSelectedOption = function(typeItem){
                     typeItem.isChecked = false;
-                    $scope.setSelectLength(typeItem);
-                    //  var subTypesArr = typeItem.sub;
-                    //
-                    // if(typeItem.nodeType === 'all'){
-                    //     $scope.setSelectLength('all', '全部数据', false );
-                    // }else if(typeItem.nodeType === 'dir'){
-                    //     typeItem.isChecked = false;
-                    //     typeItem.selectedNum = 0;
-                    //     for(var i = 0, l = subTypesArr.length; i < l; i++){
-                    //         subTypesArr[i].isChecked = false;
-                    //     }
-                    // }else{
-                    //     typeItem.isChecked = false;
-                    // }
+                    $scope.updateTreeObj(typeItem);
                 };
 
-                $scope.choose = function(name) {
-                    $scope.selectNodeType[name] = !$scope.selectNodeType[name];
-                };
+                // 当前watch函数,主要用于监听option列表的变化;当发生变化时,同步更新被选中列表(slectedOptionsArr)
                 $scope.$watch('selectOptionsConfig.tree', function(newVal, oldVal){
-                    $scope.choosedArr = [];
+                    $scope.selectOptionsConfig.selectedOptionsArr = [];
                     var selectedType;
-                    if($scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].isChecked){
+                    if($scope.selectOptionsConfig.hasAllOption && $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].isChecked){
                         selectedType = $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex];
-                        $scope.choosedArr.push(selectedType);
+                        $scope.selectOptionsConfig.selectedOptionsArr.push(selectedType);
                     }else{
                         $scope.selectOptionsConfig.tree.forEach(function(item, index) {
                             if(item.isChecked){
                                 selectedType = item;
-                                $scope.choosedArr.push(selectedType);
+                                $scope.selectOptionsConfig.selectedOptionsArr.push(selectedType);
                                 return;
                             }
                             if(item.nodeType === 'dir' && item.sub) {
                                 for(var i = 0, l = item.sub.length; i < l; i++){
                                     if(item.sub[i].isChecked){
                                         selectedType = item.sub[i];
-                                        $scope.choosedArr.push(selectedType);
+                                        $scope.selectOptionsConfig.selectedOptionsArr.push(selectedType);
                                     }
                                 }
                             }
                         });
                     }
-
-                    // $scope.choosed = getDataTypesString();
                     if(newVal !== oldVal){
-                        $('#searchDataType').focus();
+                        $('#searchInput').focus();
                     }
                 }, true);
 
+                // 初始化selectOptionsConfig,为所有节点增加index和parentIndex,其中index为当前节点在数组的index,parentIndex为父节点在数组中的index
                 $scope.selectOptionsConfig.tree.forEach(function(outerItem, outerIndex) {
 
                     outerItem.index = outerIndex;
@@ -219,6 +206,16 @@ module.exports = function (mod) {
                         });
                     }
 
+                });
+
+                $(function() {
+                    $(document).click(function(e) {
+                        var target = e.target;
+                        if (!$(target).is('.search-multi-select-area') && !$(target).parents().is('.search-multi-select-area')) {
+                            $scope.viewSettings.showMenu = false;
+                            $scope.$apply();
+                        }
+                    });
                 });
 
             }]
