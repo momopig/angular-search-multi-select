@@ -4,6 +4,7 @@ demo.controller("DemoController", ['$scope', '$timeout', function ($scope, $time
         hasAllOption:true,
         allOptionIndex: 0,
         selectedOptionsArr: [],
+        placeholder: '请输入您要查找的选项',
         tree:[
             {name: "全部数据", nodeType: 'all',  sub:[], isChecked: false, selectedNum: 0},
         {

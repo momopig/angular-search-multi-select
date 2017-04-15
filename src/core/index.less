@@ -47,85 +47,22 @@ ul {
   }
 }
 
-.create-export-task-input{
+.create-export-task-input {
   position: relative;
-  width: 256px;
+  width: 100%;
   >.right-part{
     width: 100%;
     margin-bottom: 0 !important;
   }
-  .type-select-panel{
-    position: absolute;
-    z-index: 99;
-    background: #fff;
-    width: 100%;
-    max-height: 200px;
-    margin-top: 4px;
-    border: 1px solid #E3E3E4;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius:2px;
-    overflow: auto;
-    .select-block{
-
-      .cmb-checkbox{
-        display: inline-block;
-        cursor: pointer;
-        width: 100%;
-        height: 26px;
-        line-height: 26px;
-        &:hover{
-          background: #FAFAFA;
-        }
-        input[type = "checkbox"]{
-          position: absolute;
-          z-index: 9999;
-          left: .8rem;
-          display: inline-block;
-          vertical-align: middle;
-          visibility: visible;
-          opacity: 0;
-          width: 1.2em;
-          height: 1.2em;
-        }
-        label{
-          position: relative;
-          float: none;
-          padding-left: 1.6rem;
-          display: inline-block;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          line-height: normal;
-          -moz-text-overflow: ellipsis;
-          -o-text-overflow:ellipsis;
-          width: auto;
-          height: 26px;
-          line-height: 26px;
-          margin: 0 0 0 10px;
-        }
-        label:before{
-          top: 50%;
-          margin-top: -7px;
-        }
-
-      }
-      .leaf-cmb-checkbox{
-        width: 100%;
-        padding-left: 25px;
-      }
-
-      .leaf-node-list{
-      }
-    }
-
+   #searchInput:focus{
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
   }
-
-}
-.create-export-task-input {
   .no-data-tips{
     position: absolute;
     z-index: 999;
+    top: 100%;
     background: #fff;
     width: 100%;
     text-align: center;
@@ -178,11 +115,12 @@ ul {
   .has-selected-type{
     height: auto;
   }
-  .type-name-box:nth-child(1), .type-name-box:nth-child(2){
-    margin-top: 0;
-  }
+  //.type-name-box:nth-child(1), .type-name-box:nth-child(2){
+  //  margin-top: 0;
+  //}
   .type-select-panel{
     position: absolute;
+    top: 100%;
     z-index: 99;
     background: #fff;
     width: 100%;
@@ -201,6 +139,7 @@ ul {
         width: 100%;
         height: 26px;
         line-height: 26px;
+        text-align: left;
         &:hover{
           background: #FAFAFA;
         }
