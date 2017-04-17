@@ -4,6 +4,8 @@ demo.controller("DemoController", ['$scope', '$timeout', function ($scope, $time
         hasAllOption:true,
         allOptionIndex: 0,
         selectedOptionsArr: [],
+        perNum: 4,   // 每行显示的被选中项个数
+        hGap: '8px', // 被选中项的水平间距
         placeholder: '请输入您要查找的选项',
         tree:[
             {name: "全部数据", nodeType: 'all',  sub:[], isChecked: false, selectedNum: 0},
@@ -14,6 +16,30 @@ demo.controller("DemoController", ['$scope', '$timeout', function ($scope, $time
             isChecked: false,
             selectedNum: 0
         },
+            {
+                name: "生活",
+                nodeType: 'leaf',
+                isChecked: false,
+                selectedNum: 0
+            },
+            {
+                name: "生活",
+                nodeType: 'leaf',
+                isChecked: false,
+                selectedNum: 0
+            },
+            {
+                name: "生活",
+                nodeType: 'leaf',
+                isChecked: false,
+                selectedNum: 0
+            },
+            {
+                name: "生活",
+                nodeType: 'leaf',
+                isChecked: false,
+                selectedNum: 0
+            },
             {
                 name: "生活",
                 nodeType: 'leaf',

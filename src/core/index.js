@@ -12,10 +12,18 @@ module.exports = function (mod) {
                 selectOptionsConfig: '='
             },
             template: require('./index.html'),
+            link: function(scope, element){
+                   var width = $('.input-box').width() - parseInt(scope.selectOptionsConfig.hGap) * (scope.selectOptionsConfig.perNum - 1);
+                console.log(width);
+                scope.selectOptionsConfig.perWidth = width / scope.selectOptionsConfig.perNum;
+            },
             controller: ['$scope', function($scope) {
 
                 const SUB_PROPERTY_TYPE_ERROR_TIPS = '配置对象有误,当前dir节点没有sub字段,或者sub字段的类型不是数组';
-                $scope.selectOptionsConfig.selectedOptionsArr = [];
+
+                if (angular.isArray($scope.selectOptionsConfig.selectedOptionsArr)) {
+                    $scope.selectOptionsConfig.selectedOptionsArr = [];
+                }
                 $scope.viewSettings = {
                     searchOptionName : '',
                     showMenu: false
