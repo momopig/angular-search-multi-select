@@ -13,16 +13,20 @@ module.exports = function (mod) {
             },
             template: require('./index.html'),
             link: function(scope, element){
-                   var width = $('.input-box').width() - parseInt(scope.selectOptionsConfig.hGap) * (scope.selectOptionsConfig.perNum - 1);
-                console.log(width);
-                scope.selectOptionsConfig.perWidth = width / scope.selectOptionsConfig.perNum;
+                var inputWidth = scope.selectOptionsConfig.width || $('.input-box').width();
+                var totalWidth = inputWidth - parseInt(scope.selectOptionsConfig.hGap) * (scope.selectOptionsConfig.perNum - 1);
+                console.log(inputWidth);
+                scope.selectOptionsConfig.perWidth = totalWidth / scope.selectOptionsConfig.perNum;
             },
             controller: ['$scope', function($scope) {
 
                 const SUB_PROPERTY_TYPE_ERROR_TIPS = '配置对象有误,当前dir节点没有sub字段,或者sub字段的类型不是数组';
 
-                if (angular.isArray($scope.selectOptionsConfig.selectedOptionsArr)) {
+                if (!angular.isArray($scope.selectOptionsConfig.selectedOptionsArr)) {
                     $scope.selectOptionsConfig.selectedOptionsArr = [];
+                }
+                if ($scope.selectOptionsConfig.hGap === undefined) {
+                    $scope.selectOptionsConfig.hGap = '8px';
                 }
                 $scope.viewSettings = {
                     searchOptionName : '',
@@ -172,30 +176,30 @@ module.exports = function (mod) {
 
                 // 当前watch函数,主要用于监听option列表的变化;当发生变化时,同步更新被选中列表(slectedOptionsArr)
                 $scope.$watch('selectOptionsConfig.tree', function(newVal, oldVal){
-                    $scope.selectOptionsConfig.selectedOptionsArr = [];
-                    var selectedType;
-                    if($scope.selectOptionsConfig.hasAllOption && $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].isChecked){
-                        selectedType = $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex];
-                        $scope.selectOptionsConfig.selectedOptionsArr.push(selectedType);
-                    }else{
-                        $scope.selectOptionsConfig.tree.forEach(function(item, index) {
-                            if(item.isChecked){
-                                selectedType = item;
-                                $scope.selectOptionsConfig.selectedOptionsArr.push(selectedType);
-                                return;
-                            }
-                            if(item.nodeType === 'dir' && item.sub) {
-                                for(var i = 0, l = item.sub.length; i < l; i++){
-                                    if(item.sub[i].isChecked){
-                                        selectedType = item.sub[i];
-                                        $scope.selectOptionsConfig.selectedOptionsArr.push(selectedType);
+                    if(newVal !== oldVal){
+                        $scope.selectOptionsConfig.selectedOptionsArr = [];
+                        var selectedType;
+                        if($scope.selectOptionsConfig.hasAllOption && $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].isChecked){
+                            selectedType = $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex];
+                            $scope.selectOptionsConfig.selectedOptionsArr.push(selectedType);
+                        }else{
+                            $scope.selectOptionsConfig.tree.forEach(function(item, index) {
+                                if(item.isChecked){
+                                    selectedType = item;
+                                    $scope.selectOptionsConfig.selectedOptionsArr.push(selectedType);
+                                    return;
+                                }
+                                if(item.nodeType === 'dir' && item.sub) {
+                                    for(var i = 0, l = item.sub.length; i < l; i++){
+                                        if(item.sub[i].isChecked){
+                                            selectedType = item.sub[i];
+                                            $scope.selectOptionsConfig.selectedOptionsArr.push(selectedType);
+                                        }
                                     }
                                 }
-                            }
-                        });
-                    }
-                    if(newVal !== oldVal){
-                        $('#searchInput').focus();
+                            });
+                        }
+                        // $('#searchInput').focus();
                     }
                 }, true);
 

@@ -3,9 +3,9 @@ demo.controller("DemoController", ['$scope', '$timeout', function ($scope, $time
     $scope.selectOptionsConfig = {
         hasAllOption:true,
         allOptionIndex: 0,
-        selectedOptionsArr: [],
-        perNum: 4,   // 每行显示的被选中项个数
-        hGap: '8px', // 被选中项的水平间距
+        selectedOptionsArr: [{nodeType: 'leaf', name: "工商基本信息", isChecked: false}],
+        perNum: 1,   // 每行显示的被选中项个数
+        // hGap: '8px', // 被选中项的水平间距
         placeholder: '请输入您要查找的选项',
         tree:[
             {name: "全部数据", nodeType: 'all',  sub:[], isChecked: false, selectedNum: 0},
