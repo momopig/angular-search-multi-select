@@ -13,14 +13,26 @@ module.exports = function (mod) {
             },
             template: require('./index.html'),
             link: function(scope, element){
-                var inputWidth = scope.selectOptionsConfig.width || $('.input-box').width();
-                var totalWidth = inputWidth - parseInt(scope.selectOptionsConfig.hGap) * (scope.selectOptionsConfig.perNum - 1);
-                console.log(inputWidth);
-                scope.selectOptionsConfig.perWidth = totalWidth / scope.selectOptionsConfig.perNum;
+                var contentWidth = scope.selectOptionsConfig.width || $('.input-box').width();
+                console.log('contentWidth:' + contentWidth);
+                var selectOption_totalWidth = contentWidth - parseInt(scope.selectOptionsConfig.hGap) * (scope.selectOptionsConfig.perNum - 1);
+                console.log('selectOption_totalWidth:' + selectOption_totalWidth);
+
+                scope.selectOptionsConfig.perWidth = selectOption_totalWidth / scope.selectOptionsConfig.perNum;
+                console.log('perWidth:' + scope.selectOptionsConfig.perWidth);
+
             },
             controller: ['$scope', function($scope) {
 
                 const SUB_PROPERTY_TYPE_ERROR_TIPS = '配置对象有误,当前dir节点没有sub字段,或者sub字段的类型不是数组';
+
+                $scope.isLineLastSelectOption = function($index) {
+                    return ($index + 1) % $scope.selectOptionsConfig.perNum !==  0;
+                }
+
+                $scope.currLineHasNoSelectOptions = function() {
+                    return ($scope.selectOptionsConfig.selectedOptionsArr.length % $scope.selectOptionsConfig.perNum === 0);
+                }
 
                 if (!angular.isArray($scope.selectOptionsConfig.selectedOptionsArr)) {
                     $scope.selectOptionsConfig.selectedOptionsArr = [];
