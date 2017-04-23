@@ -2,7 +2,6 @@
  * Created by Jamter on 17/4/14.
  */
 require('./index.less');
-
 module.exports = function (mod) {
     require('./filter.js')(mod);
     mod.directive('searchMultiSelect', ['$log',function ($log) {
@@ -12,15 +11,17 @@ module.exports = function (mod) {
                 selectOptionsConfig: '='
             },
             template: require('./index.html'),
-            link: function(scope, element){
-                var contentWidth = scope.selectOptionsConfig.width || $('.input-box').width();
-                console.log('contentWidth:' + contentWidth);
-                var selectOption_totalWidth = contentWidth - parseInt(scope.selectOptionsConfig.hGap) * (scope.selectOptionsConfig.perNum - 1);
+            link: function($scope, element){
+                $scope.selectOptionsConfig.width = $scope.selectOptionsConfig.width || $('.input-box').width();
+                console.log('contentWidth:' + $scope.selectOptionsConfig.width);
+                var selectOption_totalWidth = $scope.selectOptionsConfig.width - $scope.selectOptionsConfig.hGap * ($scope.selectOptionsConfig.perNum - 1);
                 console.log('selectOption_totalWidth:' + selectOption_totalWidth);
 
-                scope.selectOptionsConfig.perWidth = selectOption_totalWidth / scope.selectOptionsConfig.perNum;
-                console.log('perWidth:' + scope.selectOptionsConfig.perWidth);
-
+                $scope.selectOptionsConfig.perWidth = selectOption_totalWidth / $scope.selectOptionsConfig.perNum;
+                console.log('perWidth:' + $scope.selectOptionsConfig.perWidth);
+                
+                // $scope.selectOptionsConfig.inputWidth = $scope.selectOptionsConfig.width - ($scope.selectOptionsConfig.perWidth + $scope.selectOptionsConfig.hGap) * ($scope.selectOptionsConfig.selectedOptionsArr.length % $scope.selectOptionsConfig.perNum);
+                // console.log($scope.selectOptionsConfig.inputWidth);
             },
             controller: ['$scope', function($scope) {
 
@@ -38,7 +39,7 @@ module.exports = function (mod) {
                     $scope.selectOptionsConfig.selectedOptionsArr = [];
                 }
                 if ($scope.selectOptionsConfig.hGap === undefined) {
-                    $scope.selectOptionsConfig.hGap = '8px';
+                    $scope.selectOptionsConfig.hGap = 8;
                 }
                 $scope.viewSettings = {
                     searchOptionName : '',
@@ -213,6 +214,7 @@ module.exports = function (mod) {
                         }
                         // $('#searchInput').focus();
                     }
+                    $scope.selectOptionsConfig.inputWidth = $scope.selectOptionsConfig.width - ($scope.selectOptionsConfig.perWidth + $scope.selectOptionsConfig.hGap) * ($scope.selectOptionsConfig.selectedOptionsArr.length % $scope.selectOptionsConfig.perNum);
                 }, true);
 
                 // 初始化selectOptionsConfig,为所有节点增加index和parentIndex,其中index为当前节点在数组的index,parentIndex为父节点在数组中的index
@@ -231,6 +233,39 @@ module.exports = function (mod) {
                     }
 
                 });
+
+                // 检查初始化配置的selectedOptionsArr, 里面的元素是否来自选择列表, 如果不是则报错; 如果是,但是没有index和parentIndex这两个插件所需要的属性,则补上
+                $scope.selectOptionsConfig.selectedOptionsArr.forEach(function(item, index) {
+                    if(angular.isUndefined(item.parentIndex) && angular.isUndefined(item.index)) {
+                        var isMatch = false;
+                        outer:
+                        for(var outer_i = 0, outer_l = $scope.selectOptionsConfig.tree.length; outer_i < outer_l; outer_i++){
+                            var outerItem =  $scope.selectOptionsConfig.tree[outer_i];
+                            if(item.name === outerItem.name) {
+                                $scope.selectOptionsConfig.selectedOptionsArr[index] = outerItem;
+                                isMatch = true;
+                                break;
+                            } else {
+                                if (outerItem.nodeType === 'dir' && angular.isArray(outerItem.sub)) {
+                                    for(var inner_i = 0, inner_l = outerItem.sub.length; inner_i < inner_l; inner_i++) {
+                                        var innerItem = outerItem.sub[inner_i];
+                                        if(item.name === innerItem.name) {
+                                            $scope.selectOptionsConfig.selectedOptionsArr[index] = innerItem;
+                                            isMatch = true;
+                                            break outer;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if(!isMatch) {
+                            throw new Error('selectedOptionsArr中的被选中项, 并没有包含在选中列表中');
+                            consle.log(item);
+                        }
+                    }
+                });
+                if($scope.selectOptionsConfig.selectedOptionsArr.length !== 0) {}
+
 
                 $(function() {
                     $(document).click(function(e) {

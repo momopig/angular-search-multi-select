@@ -3,15 +3,20 @@ demo.controller("DemoController", ['$scope', '$timeout', function ($scope, $time
     $scope.selectOptionsConfig = {
         hasAllOption:true,
         allOptionIndex: 0,
-        selectedOptionsArr: [{nodeType: 'leaf', name: "工商基本信息", isChecked: false}],
-        perNum: 1,   // 每行显示的被选中项个数
-        // hGap: '8px', // 被选中项的水平间距
+        selectedOptionsArr: [
+            // {
+            //     name: "生活",
+            //     nodeType: 'leaf',
+            //     isChecked: false}
+        ],
+        perNum: 4,   // 每行显示的被选中项个数
+        // hGap: 12, // 被选中项的水平间距, 默认为8
         placeholder: '请输入您要查找的选项',
         tree:[
             {name: "全部数据", nodeType: 'all',  sub:[], isChecked: false, selectedNum: 0},
         {
             name: "工商数据",
-            nodeType: 'dir',
+            nodeType:    'dir',
             sub: [{nodeType: 'leaf', name: "工商基本信息", isChecked: false}, {nodeType: 'leaf', name: "工商股东信息", isChecked: false}],
             isChecked: false,
             selectedNum: 0
@@ -19,32 +24,7 @@ demo.controller("DemoController", ['$scope', '$timeout', function ($scope, $time
             {
                 name: "生活",
                 nodeType: 'leaf',
-                isChecked: false,
-                selectedNum: 0
-            },
-            {
-                name: "生活",
-                nodeType: 'leaf',
-                isChecked: false,
-                selectedNum: 0
-            },
-            {
-                name: "生活",
-                nodeType: 'leaf',
-                isChecked: false,
-                selectedNum: 0
-            },
-            {
-                name: "生活",
-                nodeType: 'leaf',
-                isChecked: false,
-                selectedNum: 0
-            },
-            {
-                name: "生活",
-                nodeType: 'leaf',
-                isChecked: false,
-                selectedNum: 0
+                isChecked: false
             }
             ]
     };

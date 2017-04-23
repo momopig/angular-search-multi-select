@@ -1,1 +1,3 @@
-# angular-json-schema
+##插件使用注意事项:
+1. 选择项的name, 不能有重名;
+2. 插件会为每个选中项增加两个属性, 分别是index和parentIndex;
