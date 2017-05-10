@@ -4,10 +4,13 @@ demo.controller("DemoController", ['$scope', '$timeout', function ($scope, $time
         hasAllOption:true,
         allOptionIndex: 0,
         selectedOptionsArr: [
-            // {
-            //     name: "生活",
-            //     nodeType: 'leaf',
-            //     isChecked: false}
+            {
+                name: "生活1",
+                nodeType: 'leaf'},
+            {
+                name: "工商股东信息",
+                nodeType: 'leaf'}
+
         ],
         perNum: 4,   // 每行显示的被选中项个数
         // hGap: 12, // 被选中项的水平间距, 默认为8
@@ -22,7 +25,17 @@ demo.controller("DemoController", ['$scope', '$timeout', function ($scope, $time
             selectedNum: 0
         },
             {
-                name: "生活",
+                name: "生活1",
+                nodeType: 'leaf',
+                isChecked: false
+            },
+            {
+                name: "生活2",
+                nodeType: 'leaf',
+                isChecked: false
+            },
+            {
+                name: "生活3",
                 nodeType: 'leaf',
                 isChecked: false
             }

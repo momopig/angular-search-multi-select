@@ -242,6 +242,7 @@ module.exports = function (mod) {
                         for(var outer_i = 0, outer_l = $scope.selectOptionsConfig.tree.length; outer_i < outer_l; outer_i++){
                             var outerItem =  $scope.selectOptionsConfig.tree[outer_i];
                             if(item.name === outerItem.name) {
+                                outerItem.isChecked = true;
                                 $scope.selectOptionsConfig.selectedOptionsArr[index] = outerItem;
                                 isMatch = true;
                                 break;
@@ -250,6 +251,7 @@ module.exports = function (mod) {
                                     for(var inner_i = 0, inner_l = outerItem.sub.length; inner_i < inner_l; inner_i++) {
                                         var innerItem = outerItem.sub[inner_i];
                                         if(item.name === innerItem.name) {
+                                            innerItem.isChecked = true;
                                             $scope.selectOptionsConfig.selectedOptionsArr[index] = innerItem;
                                             isMatch = true;
                                             break outer;
