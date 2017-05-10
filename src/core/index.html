@@ -1,5 +1,4 @@
-<div class="selection create-export-task-input right-part search-multi-select-area">
-    <div   class="right-part form-group " ng-class="{'has-error':false}"  >
+<div class="selection  search-multi-select-area">
         <div class="input-box clearfix form-control" ng-class="{'has-selected-type':selectOptionsConfig.selectedOptionsArr.length != 0}">
             <span class="type-name-box " ng-repeat="typeItem in selectOptionsConfig.selectedOptionsArr"  ng-click="delSelectedOption(typeItem);$event.stopPropagation()" ng-style="{width: selectOptionsConfig.perWidth + 'px', marginRight: isLineLastSelectOption($index)? (selectOptionsConfig.hGap + 'px'): '0px'}"><span class="type-name-text text-ellipsis" title="{{::typeItem.name}}">{{::typeItem.name}}</span><span class="close-btn">x</span></span>
             <input id="searchInput" ng-class="selectOptionsConfig.selectedOptionsArr.length === 0?'form-control cover-father':'reset-form-control'" ng-style="{width: currLineHasNoSelectOptions($index)?'100%':selectOptionsConfig.inputWidth + 'px'}" placeholder="{{selectOptionsConfig.selectedOptionsArr.length === 0? selectOptionsConfig.placeholder: ''}}" ng-model="viewSettings.searchOptionName" ng-focus="viewSettings.showMenu = true" ng-change="searchOptions(viewSettings.searchOptionName)"/>
@@ -27,5 +26,4 @@
             </li>
         </ul>
         <div class="no-data-tips" ng-show="viewSettings.showMenu &&viewSettings.searchOptionName != ''&& (tree_search_result.length === 0)"> 无匹配数据</div>
-    </div>
 </div>

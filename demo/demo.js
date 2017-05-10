@@ -10,9 +10,8 @@ demo.controller("DemoController", ['$scope', '$timeout', function ($scope, $time
             {
                 name: "工商股东信息",
                 nodeType: 'leaf'}
-
         ],
-        perNum: 4,   // 每行显示的被选中项个数
+        // perNum: 4,   // 每行显示的被选中项个数
         // hGap: 12, // 被选中项的水平间距, 默认为8
         placeholder: '请输入您要查找的选项',
         tree:[
