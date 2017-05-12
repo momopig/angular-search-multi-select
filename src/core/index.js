@@ -254,6 +254,14 @@ module.exports = function (mod) {
                     if(!SELECTED_ARR_CHANGE_FROM_CLICK_EVENT) {
                         console.log('output in selectedOptionsArr watcher:SELECTED_ARR_CHANGE_FROM_CLICK_EVENT is ' + SELECTED_ARR_CHANGE_FROM_CLICK_EVENT);
 
+                        $scope.selectOptionsConfig.tree.forEach(function(outerItem, outerIndex) {
+                            outerItem.isChecked = false;
+                            if (outerItem.nodeType === 'dir' && angular.isArray(outerItem.sub)) {
+                                outerItem.sub.forEach(function(innerItem, innerIndex) {
+                                    innerItem.isChecked = false;
+                                });
+                            }
+                        });
                         // 检查初始化配置的selectedOptionsArr, 里面的元素是否来自选择列表, 如果不是则报错; 如果是,但是没有index__PLUGIN_ASMS和parentIndex__PLUGIN_ASMS这两个插件所需要的属性,则补上
                         $scope.selectOptionsConfig.selectedOptionsArr.forEach(function(item, index) {
                                 var isMatch = false;
@@ -267,9 +275,6 @@ module.exports = function (mod) {
                                             isMatch = true;
                                             break;
                                         } else {
-
-                                            //selectedOptionsArr被重置时，没有被选中的item也要确保设为非选中状态(没有重置，当页面多个当前插件共享一个配置对象时，会出错：在一个插件修改了tree，在另一个插件的tree的状态没有重置)
-                                            outerItem.isChecked = false;
                                             if (outerItem.nodeType === 'dir' && angular.isArray(outerItem.sub)) {
                                                 for(var inner_i = 0, inner_l = outerItem.sub.length; inner_i < inner_l; inner_i++) {
                                                     var innerItem = outerItem.sub[inner_i];
@@ -279,10 +284,6 @@ module.exports = function (mod) {
                                                         $scope.selectOptionsConfig.selectedOptionsArr[index] = innerItem;
                                                         isMatch = true;
                                                         break outer;
-                                                    }else{
-
-                                                        //selectedOptionsArr被重置时，没有被选中的item也要确保设为非选中状态(没有重置，当页面多个当前插件共享一个配置对象时，会出错：在一个插件修改了tree，在另一个插件的tree的状态没有重置)
-                                                        innerItem.isChecked = false;
                                                     }
                                                 }
                                             }
@@ -293,6 +294,11 @@ module.exports = function (mod) {
                                     consle.log(item);
                                 }
                         });
+
+
+
+
+
                     }
 
                 });

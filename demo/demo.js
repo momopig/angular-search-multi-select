@@ -15,7 +15,7 @@ demo.controller("DemoController", ['$scope', '$timeout', function ($scope, $time
         // hGap: 12, // 被选中项的水平间距, 默认为8
         placeholder: '请输入您要查找的选项',
         tree:[
-            {name: "全部数据", nodeType: 'all',  sub:[], isChecked: false, selectedNum: 0},
+            {name: "全部数据", nodeType: 'all',  sub:[], isChecked: false, selectedNum: 1},
         {
             name: "工商数据",
             nodeType:    'dir',
