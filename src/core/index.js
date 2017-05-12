@@ -270,6 +270,7 @@ module.exports = function (mod) {
                                         var outerItem =  $scope.selectOptionsConfig.tree[outer_i];
                                         if(item.name === outerItem.name) {
                                             outerItem.isChecked = true;
+                                            $scope.updateTreeObj(outerItem);
                                             console.log('match item:' + JSON.stringify(outerItem));
                                             $scope.selectOptionsConfig.selectedOptionsArr[index] = outerItem;
                                             isMatch = true;
@@ -280,6 +281,7 @@ module.exports = function (mod) {
                                                     var innerItem = outerItem.sub[inner_i];
                                                     if(item.name === innerItem.name) {
                                                         innerItem.isChecked = true;
+                                                        $scope.updateTreeObj(innerItem);
                                                         console.log('match item:' + JSON.stringify(innerItem));
                                                         $scope.selectOptionsConfig.selectedOptionsArr[index] = innerItem;
                                                         isMatch = true;
