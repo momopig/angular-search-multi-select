@@ -245,7 +245,7 @@ module.exports = function (mod) {
 
                 });
 
-                //触发watcher的case有: 1. selectOptionsConfig.selectedOptionsArr初始化时; 2. selectOptionsConfig.selectedOptionsArr通过在插件外部被修改时; 3. selectOptionsConfig.tree被修改时
+                //触发watcher的case有: 1. selectOptionsConfig.selectedOptionsArr初始化时; 2. selectOptionsConfig.selectedOptionsArr通过在插件外部被修改时(譬如插件用于编辑的数据回显时); 3. selectOptionsConfig.tree被修改时
                 $scope.$watch('selectOptionsConfig.selectedOptionsArr', function(newVal, oldVal) {
                     console.log('selectedOptionsArr is changed');
                     /*执行if内部的代码的case有:
@@ -267,6 +267,9 @@ module.exports = function (mod) {
                                             isMatch = true;
                                             break;
                                         } else {
+
+                                            //selectedOptionsArr被重置时，没有被选中的item也要确保设为非选中状态(没有重置，当页面多个当前插件共享一个配置对象时，会出错：在一个插件修改了tree，在另一个插件的tree的状态没有重置)
+                                            outerItem.isChecked = false;
                                             if (outerItem.nodeType === 'dir' && angular.isArray(outerItem.sub)) {
                                                 for(var inner_i = 0, inner_l = outerItem.sub.length; inner_i < inner_l; inner_i++) {
                                                     var innerItem = outerItem.sub[inner_i];
@@ -276,6 +279,10 @@ module.exports = function (mod) {
                                                         $scope.selectOptionsConfig.selectedOptionsArr[index] = innerItem;
                                                         isMatch = true;
                                                         break outer;
+                                                    }else{
+
+                                                        //selectedOptionsArr被重置时，没有被选中的item也要确保设为非选中状态(没有重置，当页面多个当前插件共享一个配置对象时，会出错：在一个插件修改了tree，在另一个插件的tree的状态没有重置)
+                                                        innerItem.isChecked = false;
                                                     }
                                                 }
                                             }
