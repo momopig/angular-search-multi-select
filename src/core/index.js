@@ -84,23 +84,23 @@ module.exports = function (mod) {
                         if(optionObj.isChecked){
 
                             if (angular.isArray(optionObj.sub) ) {
-                                optionObj.selectedNum = optionObj.sub.length;
+                                optionObj.selectedNum_PLUGIN_ASMS = optionObj.sub.length;
                             } else {
                                 console.log('可能有误的option项:'  + JSON.stringify(optionObj));
                                 throw new Error(SUB_PROPERTY_TYPE_ERROR_TIPS);
                             }
 
                             if($scope.selectOptionsConfig.hasAllOption) {
-                                $scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].selectedNum++;
-                                if($scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].selectedNum === $scope.selectOptionsConfig.tree.length - 1){
-                                    $scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].isChecked = true;
+                                $scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].selectedNum_PLUGIN_ASMS++;
+                                if($scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].selectedNum_PLUGIN_ASMS === $scope.selectOptionsConfig.tree.length - 1){
+                                    $scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].isChecked = true;
                                 }
                             }
                         }else{
-                            optionObj.selectedNum = 0;
+                            optionObj.selectedNum_PLUGIN_ASMS = 0;
                             if($scope.selectOptionsConfig.hasAllOption) {
-                                $scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].selectedNum--;
-                                $scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].isChecked = false;
+                                $scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].selectedNum_PLUGIN_ASMS--;
+                                $scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].isChecked = false;
                             }
                         }
 
@@ -108,42 +108,42 @@ module.exports = function (mod) {
 
                     }else if(optionObj.nodeType === 'leaf'){
 
-                        //parentIndex__PLUGIN_ASMS为undefined,说明当前option是2级option, 且没有all option选项, 无父无子,不修改同步更新父和子;all option是1级option, dir和dir同级的option是2级option, dir下的leaf option是3级option
-                        if (optionObj.parentIndex__PLUGIN_ASMS === undefined) {
+                        //parentIndex_PLUGIN_ASMS为undefined,说明当前option是2级option, 且没有all option选项, 无父无子,不修改同步更新父和子;all option是1级option, dir和dir同级的option是2级option, dir下的leaf option是3级option
+                        if (optionObj.parentIndex_PLUGIN_ASMS === undefined) {
                             return;
                         }
                         if(optionObj.isChecked){
 
-                            $scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].selectedNum++;
-                            if($scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].nodeType === 'all') {
-                                if ($scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].selectedNum === ($scope.selectOptionsConfig.tree.length -1)) {
-                                    $scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].isChecked = true;
+                            $scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].selectedNum_PLUGIN_ASMS++;
+                            if($scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].nodeType === 'all') {
+                                if ($scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].selectedNum_PLUGIN_ASMS === ($scope.selectOptionsConfig.tree.length -1)) {
+                                    $scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].isChecked = true;
                                 }
                             } else {
 
                                 //子节点全部被选中时,目录节点的checkbox则为true
-                                if($scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].selectedNum === $scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].sub.length){
-                                    $scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].isChecked = true;
+                                if($scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].selectedNum_PLUGIN_ASMS === $scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].sub.length){
+                                    $scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].isChecked = true;
                                     if($scope.selectOptionsConfig.hasAllOption){
-                                        $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].selectedNum++;
-                                        if ($scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].selectedNum === ($scope.selectOptionsConfig.tree.length -1)) {
+                                        $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].selectedNum_PLUGIN_ASMS++;
+                                        if ($scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].selectedNum_PLUGIN_ASMS === ($scope.selectOptionsConfig.tree.length -1)) {
                                             $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].isChecked = true;
                                         }
                                     }
                                 }
                             }
                         }else{
-                            if($scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].nodeType === 'dir') {    //如果父节点是dir option
+                            if($scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].nodeType === 'dir') {    //如果父节点是dir option
 
                                 //如果父节点(dir节点)在没有更改状态前,是选中的,那么改为不选中之后,还需要修改all option,这里先提前修改all option
-                                if($scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].isChecked){
-                                    $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].selectedNum--;
+                                if($scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].isChecked){
+                                    $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].selectedNum_PLUGIN_ASMS--;
                                     $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].isChecked = false;
                                 }
                             }
 
-                            $scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].isChecked = false;
-                            $scope.selectOptionsConfig.tree[optionObj.parentIndex__PLUGIN_ASMS].selectedNum--;
+                            $scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].isChecked = false;
+                            $scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].selectedNum_PLUGIN_ASMS--;
                         }
                     }else if(optionObj.nodeType === 'all'){
 
@@ -226,19 +226,22 @@ module.exports = function (mod) {
                     $scope.selectOptionsConfig.inputWidth = $scope.selectOptionsConfig.width - ($scope.selectOptionsConfig.perWidth + $scope.selectOptionsConfig.hGap) * ($scope.selectOptionsConfig.selectedOptionsArr.length % $scope.selectOptionsConfig.perNum);
                 }, true);
 
-                // 初始化selectOptionsConfig,为所有节点增加index__PLUGIN_ASMS、parentIndex__PLUGIN_ASMS, isChecked,其中index__PLUGIN_ASMS为当前节点在数组的index__PLUGIN_ASMS,parentIndex__PLUGIN_ASMS为父节点在数组中的index
+                // 初始化selectOptionsConfig,为所有节点增加index_PLUGIN_ASMS、parentIndex_PLUGIN_ASMS, isChecked,其中index_PLUGIN_ASMS为当前节点在数组的index_PLUGIN_ASMS,parentIndex_PLUGIN_ASMS为父节点在数组中的index
                 $scope.selectOptionsConfig.tree.forEach(function(outerItem, outerIndex) {
 
-                    outerItem.index__PLUGIN_ASMS = outerIndex;
+                    outerItem.index_PLUGIN_ASMS = outerIndex;
                     outerItem.isChecked = false;
+                    if(outerItem.nodeType !== 'leaf') {
+                        outerItem.selectedNum_PLUGIN_ASMS = 0;
+                    }
                     // 包括nodeType为'dir'和'leaf'的情况
                     if ($scope.selectOptionsConfig.hasAllOption && outerItem.nodeType !== 'all') {
-                        outerItem.parentIndex__PLUGIN_ASMS = $scope.selectOptionsConfig.allOptionIndex;
+                        outerItem.parentIndex_PLUGIN_ASMS = $scope.selectOptionsConfig.allOptionIndex;
                     }
                     if (outerItem.nodeType === 'dir' && angular.isArray(outerItem.sub)) {
                         outerItem.sub.forEach(function(innerItem, innerIndex) {
-                            innerItem.parentIndex__PLUGIN_ASMS = outerIndex;
-                            innerItem.index__PLUGIN_ASMS = innerIndex;
+                            innerItem.parentIndex_PLUGIN_ASMS = outerIndex;
+                            innerItem.index_PLUGIN_ASMS = innerIndex;
                             innerItem.isChecked = false;
                         });
                     }
@@ -262,7 +265,7 @@ module.exports = function (mod) {
                                 });
                             }
                         });
-                        // 检查初始化配置的selectedOptionsArr, 里面的元素是否来自选择列表, 如果不是则报错; 如果是,但是没有index__PLUGIN_ASMS和parentIndex__PLUGIN_ASMS这两个插件所需要的属性,则补上
+                        // 检查初始化配置的selectedOptionsArr, 里面的元素是否来自选择列表, 如果不是则报错; 如果是,但是没有index_PLUGIN_ASMS和parentIndex_PLUGIN_ASMS这两个插件所需要的属性,则补上
                         $scope.selectOptionsConfig.selectedOptionsArr.forEach(function(item, index) {
                                 var isMatch = false;
                                 outer:

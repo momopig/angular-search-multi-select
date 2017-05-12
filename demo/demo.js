@@ -15,13 +15,12 @@ demo.controller("DemoController", ['$scope', '$timeout', function ($scope, $time
         // hGap: 12, // 被选中项的水平间距, 默认为8
         placeholder: '请输入您要查找的选项',
         tree:[
-            {name: "全部数据", nodeType: 'all',  sub:[], isChecked: false, selectedNum: 1},
+            {name: "全部数据", nodeType: 'all',  sub:[], isChecked: false},
         {
             name: "工商数据",
             nodeType:    'dir',
             sub: [{nodeType: 'leaf', name: "工商基本信息", isChecked: false}, {nodeType: 'leaf', name: "工商股东信息", isChecked: false}],
-            isChecked: false,
-            selectedNum: 0
+            isChecked: false
         },
             {
                 name: "生活1",
