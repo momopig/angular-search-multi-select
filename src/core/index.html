@@ -1,3 +1,4 @@
+<div ng-click="test()">test</div>
 <div class="selection  search-multi-select-area">
         <div class="input-box clearfix form-control" ng-class="{'has-selected-type':selectOptionsConfig.selectedOptionsArr.length != 0}">
             <span class="type-name-box " ng-repeat="typeItem in selectOptionsConfig.selectedOptionsArr"  ng-click="delSelectedOption(typeItem);$event.stopPropagation()" ng-style="{width: selectOptionsConfig.perWidth + 'px', marginRight: isLineLastSelectOption($index)? (selectOptionsConfig.hGap + 'px'): '0px'}"><span class="type-name-text text-ellipsis" title="{{::typeItem.name}}">{{::typeItem.name}}</span><span class="close-btn">x</span></span>
@@ -6,12 +7,12 @@
         <ul class="type-select-panel" ng-show="viewSettings.showMenu && viewSettings.searchOptionName === ''">
             <li class="select-block" ng-repeat="v in selectOptionsConfig.tree">
                 <div class="cmb-checkbox" ng-class="{'fa reset-fa': (v.nodeType === 'dir'), 'fa-angle-up': showList && v.nodeType === 'dir', 'fa-angle-down': !showList && v.nodeType === 'dir'}" ng-click="showList =  !showList;">
-                    <input id="{{v.name}}" type="checkbox" ng-model="v.isChecked" ng-change="updateTreeObj(v)" ng-click="$event.stopPropagation()">
+                    <input id="{{v.name}}" type="checkbox" ng-model="v.isChecked" ng-change="updateConfigObj(v)" ng-click="$event.stopPropagation()">
                     <label ng-bind="v.name" ></label>
                 </div>
                 <ul class="leaf-node-list" ng-show="showList">
                     <li class="cmb-checkbox leaf-cmb-checkbox clearfix"  ng-repeat="item in v.sub" >
-                        <input  type="checkbox" ng-model="item.isChecked" ng-change="updateTreeObj(item)">
+                        <input  type="checkbox" ng-model="item.isChecked" ng-change="updateConfigObj(item)">
                         <label  ng-bind="item.name" ></label>
                     </li>
                 </ul>
@@ -20,7 +21,7 @@
         <ul class="type-select-panel" ng-show="viewSettings.showMenu &&(viewSettings.searchOptionName != '') && (tree_search_result.length !== 0)">
             <li class="select-block" ng-repeat="item in tree_search_result" >
                 <div class="cmb-checkbox">
-                        <input  type="checkbox" ng-model="item.isChecked" ng-change="updateTreeObj(item)">
+                        <input  type="checkbox" ng-model="item.isChecked" ng-change="updateConfigObj(item)">
                         <label  ng-bind="item.name" ></label>
                 </div>
             </li>

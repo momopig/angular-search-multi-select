@@ -78,7 +78,6 @@ module.exports = function (mod) {
                  * */
                 $scope.updateTreeObj = function(optionObj){
 
-                    SELECTED_ARR_CHANGE_FROM_CLICK_EVENT = true;
                     if(optionObj.nodeType === 'dir'){
 
                         if(optionObj.isChecked){
@@ -159,6 +158,13 @@ module.exports = function (mod) {
                     }
                 };
 
+                $scope.updateConfigObj = function(optionObj){
+                    $scope.updateTreeObj(optionObj);
+                    $scope.updateSelectedArr();
+                    $scope.selectOptionsConfig.inputWidth = $scope.selectOptionsConfig.width - ($scope.selectOptionsConfig.perWidth + $scope.selectOptionsConfig.hGap) * ($scope.selectOptionsConfig.selectedOptionsArr.length % $scope.selectOptionsConfig.perNum);
+
+                };
+
                 $scope.searchOptions = function(optionName){
                     $scope.tree_search_result = [];
                     if(optionName === '' || optionName === undefined){
@@ -191,39 +197,50 @@ module.exports = function (mod) {
                  * */
                 $scope.delSelectedOption = function(typeItem){
                     typeItem.isChecked = false;
-                    $scope.updateTreeObj(typeItem);
+                    $scope.updateConfigObj(typeItem);
                 };
-
-                // 当前watch函数,主要用于监听option列表的变化;当发生变化时,同步更新被选中列表(slectedOptionsArr)
-                $scope.$watch('selectOptionsConfig.tree', function(newVal, oldVal){
-
-                    //不是第一次初始化引起的变化时
-                    if(newVal !== oldVal){
-                        $scope.selectOptionsConfig.selectedOptionsArr = [];
-                        var selectedType;
-                        if($scope.selectOptionsConfig.hasAllOption && $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].isChecked){
-                            selectedType = $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex];
-                            $scope.selectOptionsConfig.selectedOptionsArr.push(selectedType);
-                        }else{
-                            $scope.selectOptionsConfig.tree.forEach(function(item, index) {
-                                if(item.isChecked){
-                                    selectedType = item;
-                                    $scope.selectOptionsConfig.selectedOptionsArr.push(selectedType);
-                                    return;
-                                }
-                                if(item.nodeType === 'dir' && item.sub) {
-                                    for(var i = 0, l = item.sub.length; i < l; i++){
-                                        if(item.sub[i].isChecked){
-                                            selectedType = item.sub[i];
-                                            $scope.selectOptionsConfig.selectedOptionsArr.push(selectedType);
-                                        }
+                /**
+                 * @desc 必须等到tree更新完之后,才调用
+                 *
+                 *
+                 * */
+                $scope.updateSelectedArr = function() {
+                    var selectedOptionsArr = [];
+                    var selectedType;
+                    if($scope.selectOptionsConfig.hasAllOption && $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex].isChecked){
+                        selectedType = $scope.selectOptionsConfig.tree[$scope.selectOptionsConfig.allOptionIndex];
+                        selectedOptionsArr.push(selectedType);
+                    }else{
+                        $scope.selectOptionsConfig.tree.forEach(function(item, index) {
+                            if(item.isChecked){
+                                selectedType = item;
+                                selectedOptionsArr.push(selectedType);
+                                return;
+                            }
+                            if(item.nodeType === 'dir' && item.sub) {
+                                for(var i = 0, l = item.sub.length; i < l; i++){
+                                    if(item.sub[i].isChecked){
+                                        selectedType = item.sub[i];
+                                        selectedOptionsArr.push(selectedType);
                                     }
                                 }
-                            });
-                        }
-                        // $('#searchInput').focus();
+                            }
+                        });
                     }
-                    $scope.selectOptionsConfig.inputWidth = $scope.selectOptionsConfig.width - ($scope.selectOptionsConfig.perWidth + $scope.selectOptionsConfig.hGap) * ($scope.selectOptionsConfig.selectedOptionsArr.length % $scope.selectOptionsConfig.perNum);
+                    // $('#searchInput').focus();
+                    while($scope.selectOptionsConfig.selectedOptionsArr.length !== 0) {
+                        $scope.selectOptionsConfig.selectedOptionsArr.pop();
+                    }
+                    selectedOptionsArr.forEach(function(item){
+                        $scope.selectOptionsConfig.selectedOptionsArr.push(item);
+                    });
+                }
+                // 当前watch函数,主要用于监听option列表的变化;当发生变化时,同步更新被选中列表(slectedOptionsArr)
+                $scope.$watch('selectOptionsConfig.tree', function(newVal, oldVal){
+                    if(!SELECTED_ARR_CHANGE_FROM_CLICK_EVENT) {
+                        return;
+                    }
+
                 }, true);
 
                 // 初始化selectOptionsConfig,为所有节点增加index_PLUGIN_ASMS、parentIndex_PLUGIN_ASMS, isChecked,其中index_PLUGIN_ASMS为当前节点在数组的index_PLUGIN_ASMS,parentIndex_PLUGIN_ASMS为父节点在数组中的index
@@ -247,6 +264,9 @@ module.exports = function (mod) {
                     }
 
                 });
+                $scope.test = function(){
+                    $scope.selectOptionsConfig.selectedOptionsArr = [];
+                };
 
                 //触发watcher的case有: 1. selectOptionsConfig.selectedOptionsArr初始化时; 2. selectOptionsConfig.selectedOptionsArr通过在插件外部被修改时(譬如插件用于编辑的数据回显时); 3. selectOptionsConfig.tree被修改时
                 $scope.$watch('selectOptionsConfig.selectedOptionsArr', function(newVal, oldVal) {
@@ -254,61 +274,57 @@ module.exports = function (mod) {
                     /*执行if内部的代码的case有:
                      1. selectOptionsConfig.selectedOptionsArr初始化时(数组长度为0, 也可能不为0);
                      2. selectOptionsConfig.tree不是因为点击事件引起的修改时(selectedOptionsArr初始化引起ife内部函数被执行,里面可能会修改 tree item的isChecked值, 进而引起tree发生变化)*/
-                    if(!SELECTED_ARR_CHANGE_FROM_CLICK_EVENT) {
-                        console.log('output in selectedOptionsArr watcher:SELECTED_ARR_CHANGE_FROM_CLICK_EVENT is ' + SELECTED_ARR_CHANGE_FROM_CLICK_EVENT);
+                    console.log('output in selectedOptionsArr watcher:SELECTED_ARR_CHANGE_FROM_CLICK_EVENT is ' + SELECTED_ARR_CHANGE_FROM_CLICK_EVENT);
 
-                        $scope.selectOptionsConfig.tree.forEach(function(outerItem, outerIndex) {
-                            outerItem.isChecked = false;
-                            if (outerItem.nodeType === 'dir' && angular.isArray(outerItem.sub)) {
-                                outerItem.sub.forEach(function(innerItem, innerIndex) {
-                                    innerItem.isChecked = false;
-                                });
-                            }
-                        });
-                        // 检查初始化配置的selectedOptionsArr, 里面的元素是否来自选择列表, 如果不是则报错; 如果是,但是没有index_PLUGIN_ASMS和parentIndex_PLUGIN_ASMS这两个插件所需要的属性,则补上
-                        $scope.selectOptionsConfig.selectedOptionsArr.forEach(function(item, index) {
-                                var isMatch = false;
-                                outer:
-                                    for(var outer_i = 0, outer_l = $scope.selectOptionsConfig.tree.length; outer_i < outer_l; outer_i++){
-                                        var outerItem =  $scope.selectOptionsConfig.tree[outer_i];
-                                        if(item.name === outerItem.name) {
-                                            outerItem.isChecked = true;
-                                            $scope.updateTreeObj(outerItem);
-                                            console.log('match item:' + JSON.stringify(outerItem));
-                                            $scope.selectOptionsConfig.selectedOptionsArr[index] = outerItem;
-                                            isMatch = true;
-                                            break;
-                                        } else {
-                                            if (outerItem.nodeType === 'dir' && angular.isArray(outerItem.sub)) {
-                                                for(var inner_i = 0, inner_l = outerItem.sub.length; inner_i < inner_l; inner_i++) {
-                                                    var innerItem = outerItem.sub[inner_i];
-                                                    if(item.name === innerItem.name) {
-                                                        innerItem.isChecked = true;
-                                                        $scope.updateTreeObj(innerItem);
-                                                        console.log('match item:' + JSON.stringify(innerItem));
-                                                        $scope.selectOptionsConfig.selectedOptionsArr[index] = innerItem;
-                                                        isMatch = true;
-                                                        break outer;
-                                                    }
+                    $scope.selectOptionsConfig.tree.forEach(function(outerItem, outerIndex) {
+                        outerItem.isChecked = false;
+                        if (outerItem.nodeType === 'dir' && angular.isArray(outerItem.sub)) {
+                            outerItem.sub.forEach(function(innerItem, innerIndex) {
+                                innerItem.isChecked = false;
+                            });
+                        }
+                    });
+                    // 检查初始化配置的selectedOptionsArr, 里面的元素是否来自选择列表, 如果不是则报错; 如果是,但是没有index_PLUGIN_ASMS和parentIndex_PLUGIN_ASMS这两个插件所需要的属性,则补上
+                    $scope.selectOptionsConfig.selectedOptionsArr.forEach(function(item, index) {
+                            var isMatch = false;
+                            outer:
+                                for(var outer_i = 0, outer_l = $scope.selectOptionsConfig.tree.length; outer_i < outer_l; outer_i++){
+                                    var outerItem =  $scope.selectOptionsConfig.tree[outer_i];
+                                    if(item.name === outerItem.name) {
+                                        outerItem.isChecked = true;
+
+                                        //独立更新treeObj, 而不是updateConfigObj会先更新treeObj,再更新selectedOptionArr;但是这里selectedOptionArr已初始化
+                                        $scope.updateTreeObj(outerItem);
+                                        console.log('match item:' + JSON.stringify(outerItem));
+                                        $scope.selectOptionsConfig.selectedOptionsArr[index] = outerItem;
+                                        isMatch = true;
+                                        break;
+                                    } else {
+                                        if (outerItem.nodeType === 'dir' && angular.isArray(outerItem.sub)) {
+                                            for(var inner_i = 0, inner_l = outerItem.sub.length; inner_i < inner_l; inner_i++) {
+                                                var innerItem = outerItem.sub[inner_i];
+                                                if(item.name === innerItem.name) {
+                                                    innerItem.isChecked = true;
+
+                                                    //独立更新treeObj, 而不是updateConfigObj会先更新treeObj,再更新selectedOptionArr;但是这里selectedOptionArr已初始化
+                                                    $scope.updateTreeObj(innerItem);
+                                                    console.log('match item:' + JSON.stringify(innerItem));
+                                                    $scope.selectOptionsConfig.selectedOptionsArr[index] = innerItem;
+                                                    isMatch = true;
+                                                    break outer;
                                                 }
                                             }
                                         }
                                     }
-                                if(!isMatch) {
-                                    throw new Error('selectedOptionsArr中的被选中项, 并没有包含在选中列表中');
-                                    consle.log(item);
                                 }
-                        });
-
-
-
-
-
-                    }
-
+                            if(!isMatch) {
+                                throw new Error('selectedOptionsArr中的被选中项, 并没有包含在选中列表中');
+                                consle.log(item);
+                            }
+                    });
+                    $scope.selectOptionsConfig.inputWidth = $scope.selectOptionsConfig.width - ($scope.selectOptionsConfig.perWidth + $scope.selectOptionsConfig.hGap) * ($scope.selectOptionsConfig.selectedOptionsArr.length % $scope.selectOptionsConfig.perNum);
                 });
 
-                if($scope.selectOptionsConfig.selectedOptionsArr.length !== 0) {}
                 $(function() {
                     $(document).click(function(e) {
                         var target = e.target;
