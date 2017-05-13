@@ -1,4 +1,4 @@
-<div ng-click="test()">test</div>
+<!--<div ng-click="test()">test</div>-->
 <div class="selection  search-multi-select-area">
         <div class="input-box clearfix form-control" ng-class="{'has-selected-type':selectOptionsConfig.selectedOptionsArr.length != 0}">
             <span class="type-name-box " ng-repeat="typeItem in selectOptionsConfig.selectedOptionsArr"  ng-click="delSelectedOption(typeItem);$event.stopPropagation()" ng-style="{width: selectOptionsConfig.perWidth + 'px', marginRight: isLineLastSelectOption($index)? (selectOptionsConfig.hGap + 'px'): '0px'}"><span class="type-name-text text-ellipsis" title="{{::typeItem.name}}">{{::typeItem.name}}</span><span class="close-btn">x</span></span>
