@@ -1,0 +1,1 @@
+index.js #因为package.json 里面其实配置了main，所以index.js文件可以去掉

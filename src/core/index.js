@@ -29,11 +29,38 @@ module.exports = function (mod) {
 
                 $scope.isLineLastSelectOption = function($index) {
                     return ($index + 1) % $scope.selectOptionsConfig.perNum !==  0;
-                }
+                };
 
                 $scope.currLineHasNoSelectOptions = function() {
                     return ($scope.selectOptionsConfig.selectedOptionsArr.length % $scope.selectOptionsConfig.perNum === 0);
-                }
+                };
+
+    /**
+     *  @desc 获取被选中options的key属性的value
+     *  @param key { String } 属性名，默认值为'name'
+     *  @return { Array } 返回一个数组，item为被选中options的key属性的value
+     * */
+                $scope.selectOptionsConfig.getValsByKey = function (key) {
+                    var vals = [];
+                    key = key || 'name';
+                    this.tree.forEach(function(item) {
+                        if (item.nodeType === 'leaf') {
+                            if (item.isChecked) {
+                                vals.push(item[key]);
+                            }
+                        } else if (item.nodeType === 'dir') {
+                            if(!angular.isArray(item.sub)) {
+                                return;
+                            }
+                            for(var i = 0, l = item.sub.length; i < l; i++){
+                                if (item.sub[i].isChecked) {
+                                    vals.push(item.sub[i][key]);
+                                }
+                            }
+                        }
+                    });
+                    return vals;
+                };
 
                 if (!angular.isArray($scope.selectOptionsConfig.selectedOptionsArr)) {
                     $scope.selectOptionsConfig.selectedOptionsArr = [];
@@ -76,11 +103,8 @@ module.exports = function (mod) {
                  *
                  * */
                 $scope.updateTreeObj = function(optionObj){
-
                     if(optionObj.nodeType === 'dir'){
-
                         if(optionObj.isChecked){
-
                             if (angular.isArray(optionObj.sub) ) {
                                 optionObj.selectedNum_PLUGIN_ASMS = optionObj.sub.length;
                             } else {
@@ -111,7 +135,6 @@ module.exports = function (mod) {
                             return;
                         }
                         if(optionObj.isChecked){
-
                             $scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].selectedNum_PLUGIN_ASMS++;
                             if($scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].nodeType === 'all') {
                                 if ($scope.selectOptionsConfig.tree[optionObj.parentIndex_PLUGIN_ASMS].selectedNum_PLUGIN_ASMS === ($scope.selectOptionsConfig.tree.length -1)) {
@@ -245,8 +268,18 @@ module.exports = function (mod) {
 
                 // 初始化selectOptionsConfig,为所有节点增加index_PLUGIN_ASMS、parentIndex_PLUGIN_ASMS, isChecked,其中index_PLUGIN_ASMS为当前节点在数组的index_PLUGIN_ASMS,parentIndex_PLUGIN_ASMS为父节点在数组中的index
                 $scope.selectOptionsConfig.tree.forEach(function(outerItem, outerIndex) {
+
                     outerItem.index_PLUGIN_ASMS = outerIndex;
                     outerItem.isChecked = false;
+
+                    // 仅nodeType为'all'需要用户自己设定，其它由初始化程序生成
+                    if (outerItem.nodeType === undefined) {
+                        if (angular.isArray(outerItem.sub)) {
+                            outerItem.nodeType = 'dir';
+                        } else {
+                            outerItem.nodeType = 'leaf';
+                        }
+                    }
                     if(outerItem.nodeType !== 'leaf') {
                         outerItem.selectedNum_PLUGIN_ASMS = 0;
                     }
@@ -256,6 +289,7 @@ module.exports = function (mod) {
                     }
                     if (outerItem.nodeType === 'dir' && angular.isArray(outerItem.sub)) {
                         outerItem.sub.forEach(function(innerItem, innerIndex) {
+                            innerItem.nodeType = 'leaf';
                             innerItem.parentIndex_PLUGIN_ASMS = outerIndex;
                             innerItem.index_PLUGIN_ASMS = innerIndex;
                             innerItem.isChecked = false;
@@ -272,7 +306,7 @@ module.exports = function (mod) {
                     console.log('selectedOptionsArr is changed');
 
                     /*执行if内部的代码的case有:
-                     1. selectOptionsConfig.selectedOptionsArr初始化时(数组长度为0, 也可能不为0);*/
+                     1. selectOptionsConfig.selectedOptionsArr初始化时，用于清除之前的缓存数据(数组长度为0, 也可能不为0);*/
                     $scope.selectOptionsConfig.tree.forEach(function(outerItem, outerIndex) {
                         outerItem.isChecked = false;
                         if (outerItem.nodeType === 'dir' && angular.isArray(outerItem.sub)) {
