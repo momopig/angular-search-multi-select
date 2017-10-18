@@ -1,0 +1,208 @@
+.export-item {
+    label,
+    .label {
+        display: inline-block !important;
+        cursor: pointer;
+    }
+    &.import-time-item {
+        .title {
+            display: block !important;
+        }
+    }
+    &.data-type-item {
+        position: relative;
+        .input-area {
+            position: relative;
+            margin-top: 6px;
+            input[type="text"] {
+                box-sizing: border-box;
+                width: 100%;
+            }
+            .selected-types-area {
+                padding-left: 10px;
+            }
+            .icon-arrow {
+                position: absolute;
+                top: 0;
+                right: 0;
+                background-image: url("../../imgs/export_task/input_down_arrow.png");
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: 16px auto;
+                width: 28px;
+                height: 38px;
+            }
+            &.has-selected-type {
+                height: auto;
+                padding: 9px 0;
+                border: 1px solid #bdbdbd;
+                >input[type="text"] {
+                    float: left;
+                    border: none !important;
+                    width: 100px;
+                    height: 22px !important;
+                    line-height: 22px;
+                    margin: 0;
+                }
+            }
+            &.focus {
+                border: 1px solid #008CFF;
+                .icon-arrow {
+                    background-image: url("../../imgs/export_task/input_up_arrow.png");
+                }
+            }
+            .selected-types-area {
+                .selected-type-item {
+                    float: left;
+                    background-color: #EEEEEE;
+                    background-size: 12px auto;
+                    background-position: 74px center;
+                    width: 53px;
+                    height: 22px;
+                    line-height: 22px;
+                    padding: 0 28px 0 8px;
+                    -webkit-border-radius: 100px;
+                    -moz-border-radius: 100px;
+                    border-radius: 100px;
+                    margin-right: 4px;
+                    color: #666666;
+                    font-size: 12px;
+                    cursor: pointer;
+                }
+            }
+            .not-first-line {
+                margin-top: 4px !important;
+            }
+        }
+        .tips-area {
+            position: relative;
+            .board {
+                display: none;
+                position: absolute;
+                z-index: 999;
+                top: 0;
+                box-sizing: border-box;
+                background: #fff;
+                width: 100%;
+                border: 1px solid #BDBDBD;
+                &.type-select-board {
+                    &::-webkit-scrollbar {
+                        display: none
+                    }
+                    height: 200px;
+                    padding-left: 10px;
+                    border-top: 0;
+                    overflow-y: auto;
+                    .type-item {
+                        position: relative;
+                        width: 300px;
+                        font-size: 12px;
+                        &.all-data-type-item {
+                            border-bottom: 1px solid #DDDDDD;
+                        }
+                        .type-checkbox-area {
+                            position: relative;
+                            background-image: url("../../imgs/export_task/dest_up_arrow.png");
+                            background-size: 14px auto;
+                            background-repeat: no-repeat;
+                            background-position: right center;
+                            line-height: 24px;
+                            margin: 5px 0;
+                            .checkbox-wrapper {
+                                display: inline-block;
+                                background-image: url("../../imgs/export_task/checkbox_false.png");
+                                background-size: 14px auto;
+                                background-repeat: no-repeat;
+                                background-position: center center;
+                                width: 14px;
+                                heigth: 100%;
+                                >input {
+                                    opacity: 0;
+                                }
+                                &.checked {
+                                    background-image: url("../../imgs/export_task/checkbox_true.png");
+                                }
+                            }
+                            >input {
+                                position: absolute;
+                                top: 0;
+                                bottom: 0;
+                                left: 0;
+                                margin: auto;
+                                font-size: 12px;
+                            }
+                            >label {
+                                display: inline-block;
+                                font-size: 12px;
+                            }
+                        }
+                        .sub-select-board {
+                            margin-left: 20px;
+                            .type-checkbox-area {
+                                background: none;
+                            }
+                        }
+                        &.dest-data-type-item {
+                            .icon-arrow {
+                                position: absolute;
+                                top: 0;
+                                right: 0;
+                                background-image: url("../../imgs/export_task/checkbox_up_arrow.png");
+                                background-repeat: no-repeat;
+                                background-position: center center;
+                                background-size: 14px auto;
+                                width: 14px;
+                                height: 24px;
+                            }
+                            &.hide-sub-board {
+                                .type-checkbox-area {
+                                    background-image: url("../../imgs/export_task/dest_down_arrow.png");
+                                }
+                                .icon-arrow {
+                                    background-image: url("../../imgs/export_task/checkbox_down_arrow.png");
+                                }
+                                .sub-select-board {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+                    .type-item:first-child {
+                        .type-checkbox-area {
+                            height: 34px;
+                            line-height: 34px;
+                            background: none;
+                        }
+                    }
+                }
+                &.no-match-type-board {
+                    position: absolute;
+                    top: 3px;
+                    display: none;
+                    height: 30px;
+                    line-height: 30px;
+                    text-align: center;
+                    font-size: 12px;
+                    color: #999;
+                }
+            }
+        }
+    }
+    .calendar-area {
+        position: relative;
+        border: 1px solid #bdbdbd;
+        .icon-calendar {
+            position: absolute;
+            top: 7px;
+            right: 8px;
+            pointer-events: none;
+            background-repeat: no-repeat;
+        }
+        .calendar-input {
+            float: left;
+            box-sizing: border-box;
+            width: 100%;
+            border: none;
+        }
+    }
+}
