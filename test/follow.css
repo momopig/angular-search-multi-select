@@ -1,3 +1,11 @@
+ol,ul,li { list-style:none; }
+.data-type-tip {
+  color: #999999;
+  display: block;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
 .export-item label,
 .export-item .label {
   display: inline-block !important;
@@ -194,3 +202,7 @@
   width: 100%;
   border: none;
 }
+.show-force {
+  display: block !important;
+}
+

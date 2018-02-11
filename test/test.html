@@ -12,7 +12,6 @@
                 <div class="icon-arrow"><i class="icon-input-down-arrow"></i></div>
             </div>
             <div class="tips-area">
-                <span class="data-type-tip">工商和上市类的基本信息仅导出最新的数据</span>
                 <ul class="board type-select-board " id="typeSelectBoard"></ul>
                 <ul class="board type-select-board " id="typeMatchBoard"></ul>
                 <ul class="board no-match-type-board " id="noMatchBoard">无匹配类型</ul>
@@ -529,9 +528,9 @@
                 }
                 return dataTypeTreeSearchResult;
             }
-            debugger
+            
             $(function() {
-                debugger
+                
                 var typeSelectBoard_innerHtml = template('typeSelectBoardTmpl', {dataTypeTree: dataTypeTree});
                 $('#typeSelectBoard').html(typeSelectBoard_innerHtml);
 

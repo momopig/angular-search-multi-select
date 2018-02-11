@@ -1,0 +1,767 @@
+@import "../common/common.less";
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    background-color: white !important;
+    background-image: none;
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    color: rgb(0, 0, 0);
+}
+
+.login-register-modal-main {
+    position: relative;
+    width: 360px;
+    margin: 0 auto;
+    position: relative;
+    height: 462px !important;
+    .lr-title {
+        width: 100%;
+        height: 30px;
+        position: relative;
+        display: inline-table;
+        padding-top: 64px;
+        color: #afafaf;
+        .ta-c;
+        span {
+            position: relative;
+            background-color: #fff;
+            display: inline-block;
+            padding: 0 10px;
+            z-index: 104;
+            font-size: 20px;
+            line-height: 30px;
+            .cursor-pointer;
+            &:nth-child(1) {
+                padding-left: 25px;
+            }
+            &:nth-child(3) {
+                padding-right: 25px;
+            }
+            &.is-choose {
+                color: #333;
+            }
+        }
+    }
+    hr {
+        margin: 0;
+        border: 0;
+        border-top: 1px solid #AFAFAF;
+        color: #AFAFAF;
+        position: relative;
+        top: -16px;
+        width: 100%;
+    }
+    .input-box {
+        width: 100%;
+        min-height: 166px;
+        padding-top: 48px;
+        position: relative;
+        .lr-input {
+            &:focus::-webkit-input-placeholder {
+                color: #BDBDBD !important;
+            }
+            &:focus::-moz-input-placeholder {
+                color: #BDBDBD !important;
+            }
+            &:focus::-ms-input-placeholder {
+                color: #BDBDBD !important;
+            }
+            &:focus::-o-input-placeholder {
+                color: #BDBDBD !important;
+            }
+            &:focus::placeholder {
+                color: #BDBDBD !important;
+            }
+            width: 326px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: #afafaf;
+            padding: 10px 16px;
+            height: 22px;
+            line-height: 22px;
+            .ft14;
+            &:focus {
+                border-color: #249cff;
+                background-color: white;
+                box-shadow: 0px 0px 0px 2px #e5eff9;
+            }
+        }
+        .input-tip-box {
+            display: inline-block;
+            width: 100%;
+            min-height: 34px;
+            line-height: 24px;
+            .ft12;
+            .clearfix;
+            .tip {
+                float: right;
+                width: 250px;
+                text-align: right;
+                color: #999;
+            }
+            .password-error {
+                color: #FF5651;
+            }
+        }
+        #login_user-error {
+            font-size: 12px;
+            float: left;
+            color: #FF5651;
+            line-height: 24px;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 176px;
+        }
+    }
+    .btn-box {
+        width: 100%;
+        height: 78px;
+        .login-btn {
+            width: 360px;
+            border: 0;
+            background-color: #249CFF;
+            opacity: 0.6;
+            height: 48px;
+            color: white;
+            .ft16;
+            cursor: not-allowed;
+            line-height: 48px;
+            text-align: center;
+        }
+        .login-aways {
+            height: 14px;
+            display: inline-block;
+            margin: 12px 8px 8px 0;
+            .clearfix;
+            .cursor-pointer;
+            input {
+                float: left;
+                width: 14px;
+                height: 14px;
+            }
+            span {
+                float: left;
+                .ft14;
+                margin-left: 5px;
+                color: #999;
+                line-height: 14px;
+                .can-not-select;
+            }
+        }
+    }
+}
+
+.regist-modal-main {
+    position: relative;
+    width: 360px;
+    margin: 0 auto;
+    position: relative;
+    height: 518px !important;
+    .lr-title {
+        width: 100%;
+        height: 30px;
+        position: relative;
+        display: inline-table;
+        padding-top: 64px;
+        color: #afafaf;
+        .ta-c;
+        span {
+            position: relative;
+            background-color: #fff;
+            display: inline-block;
+            padding: 0 10px;
+            z-index: 104;
+            font-size: 20px;
+            line-height: 30px;
+            .cursor-pointer;
+            &:nth-child(1) {
+                padding-left: 25px;
+            }
+            &:nth-child(3) {
+                padding-right: 25px;
+            }
+            &.is-choose {
+                color: #333;
+            }
+        }
+    }
+    hr {
+        margin: 0;
+        border: 0;
+        border-top: 1px solid #e3e3e4;
+        color: #e3e3e4;
+        position: relative;
+        top: -16px;
+        width: 100%;
+    }
+    .input-box {
+        width: 100%;
+        height: 234px;
+        padding-top: 48px;
+        position: relative;
+        .lr-input {
+            width: 326px;
+            border-width: 1px;
+            border-style: solid;
+            border-color: #afafaf;
+            background-color: white;
+            height: 14px;
+            padding: 14px 16px;
+            .ft14;
+            &:focus,
+             :-webkit-autofill {
+                border-color: #249cff;
+                background-color: white;
+                box-shadow: 0px 0px 0px 2px #e5eff9;
+            }
+        }
+        .input-tip-box {
+            display: inline-block;
+            width: 100%;
+            height: 34px;
+            line-height: 24px;
+            .ft12;
+            .clearfix;
+            .tip {
+                float: right;
+                width: 250px;
+                text-align: right;
+                color: #999;
+            }
+            .password-error {
+                color: #FF5651;
+            }
+        }
+    }
+    .btn-box {
+        width: 100%;
+        height: 48px;
+        padding-top: 40px;
+        .login-btn {
+            width: 360px;
+            border: 0;
+            background-color: #249CFF;
+            opacity: 0.6;
+            height: 48px;
+            color: white;
+            line-height: 48px;
+            text-align: center;
+            cursor: not-allowed;
+            .ft16;
+        }
+    }
+}
+
+.export-body {
+    min-height: 500px;
+    max-height: 510px;
+    .export-container {
+        height: 486px;
+        padding: 0 40px;
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+            //display:none
+        }
+        .export-item {
+            margin-top: 24px;
+            label,
+            .label {
+                .ft14;
+                color: #666666;
+                display: block;
+                &.error {
+                    text-align: right;
+                    font-size: 12px;
+                    margin-top: 5px;
+                    color: #FB423A;
+                }
+            }
+            .input-area {
+                border: 1px solid #bdbdbd;
+                height: 38px;
+                margin-top: 6px;
+                &.focus {
+                    border-color: #008CFF;
+                }
+                input[type=text] {
+                    box-sizing: border-box;
+                    width: 100%;
+                    height: 100%;
+                    line-height: 38px;
+                    line-height: 38px\9;
+                    border: none;
+                    padding-left: 10px;
+                    color: #666666;
+                    font-size: 14px;
+                    &.error {
+                        border-color: #FB423A;
+                    }
+                }
+            }
+            .data-type-tip {
+                .ft12;
+                color: #999999;
+                display: block;
+                margin-top: 5px;
+            }
+            .radio-inline {
+                float: left;
+                width: 50%;
+                margin-bottom: 24px;
+                position: relative;
+                color: #666666;
+                .ft14;
+                margin-top: 10px;
+                input[type=radio] {
+                    top: 50%;
+                    width: auto;
+                    display: inline-block;
+                    height: auto;
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
+    .export-btn-group {}
+}
+
+.edit-container {
+    .form-item {
+        margin: 32px 40px 0;
+        input {
+            .fl;
+            line-height: 38px;
+            line-height: 38px\9;
+        }
+        .error-desc {
+            color: #666;
+            padding: 5px 0;
+            font-size: 12px;
+            float: left;
+            display: none;
+            em {
+                color: #008CFF;
+                cursor: pointer;
+                opacity: .9;
+                &:hover {
+                    opacity: 1;
+                    border-bottom: 1px solid #008CFF;
+                }
+            }
+        }
+        .icon-delete-input {
+            display: none;
+            .cursor-pointer;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            right: 50px;
+            margin-top: 18px;
+        }
+    }
+}
+
+.confirm-header {
+    height: 50px;
+}
+
+.confirm-body {
+    text-align: center;
+    margin-top: 16px;
+    .title {
+        .ft16;
+        color: #666666;
+    }
+    .message {
+        margin-top: 10px;
+        margin-bottom: 40px;
+        line-height: 16px;
+        .ft12;
+        color: #bdbdbd;
+    }
+    .modal-confirm-btn {
+        margin: 0 auto;
+    }
+}
+
+
+/*多页面使用,抽离为公共部分 START*/
+
+.edit-follow-modal {
+    .edit-follow-body {
+        margin: 32px 40px;
+        .edit-follow-content {
+            .title {
+                .ft14;
+                color: #999999;
+            }
+            .group-container {
+                height: 178px; //padding-top: 25px;
+                margin-top: 16px;
+                overflow: auto;
+                &::-webkit-scrollbar {
+                    //display: none;
+                }
+                .group-item {
+                    position: relative;
+                    float: left;
+                    box-sizing: border-box;
+                    width: 50%;
+                    height: 16px;
+                    line-height: 16px;
+                    padding-left: 22px;
+                    margin-bottom: 8px;
+                    font-size: 14px;
+                    color: #666666;
+                    input[type="checkbox"] {
+                        .v-center;
+                        left: 0;
+                    }
+                    .group-name {
+                        .text-ellipsis;
+                        display: inline-block;
+                        width: 124px;
+                    }
+                }
+            }
+            .add-group-area {
+                margin-top: 22px;
+                .btn-add-group {
+                    width: 88px;
+                    height: 28px;
+                    line-height: 28px;
+                    border: 1px solid #008CFF;
+                    color: #008CFF;
+                    font-size: 14px;
+                    text-align: center;
+                    cursor: pointer;
+                }
+                .add-group-input-area {
+                    position: relative;
+                    display: none;
+                    height: 30px;
+                    line-height: 30px;
+                    line-height: 30px\9;
+                    font-size: 14px;
+                    .common-input-area {
+                        position: relative;
+                        float: left;
+                        height: 30px;
+                        >input {
+                            float: left;
+                            box-sizing: border-box;
+                            width: 230px;
+                            height: 30px;
+                            line-height: 30px;
+                            line-height: 30px\9;
+                            padding-left: 9px;
+                            border: 1px solid #BDBDBD;
+                            color: #666;
+                        }
+                        .icon-delete-input {
+                            position: absolute;
+                            display: none;
+                            width: 16px;
+                            height: 16px;
+                            right: 7px;
+                            cursor: pointer;
+                        }
+                    }
+                    .submit-btn-add-group {
+                        float: left;
+                        background: #008CFF;
+                        width: 48px;
+                        height: 100%;
+                        color: #FFFFFF;
+                        text-align: center;
+                        cursor: pointer;
+                    }
+                    .cancel-btn-add-group {
+                        float: left;
+                        height: 100%;
+                        margin-left: 6px;
+                        color: #666666;
+                        cursor: pointer;
+                        text-decoration: underline;
+                    }
+                }
+                .icon-delete-input {
+                    position: absolute;
+                    display: none;
+                    width: 16px;
+                    height: 16px;
+                    right: 7px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+
+/*多页面使用,抽离为公共部分 END*/
+
+
+/*导出任务详情modal START*/
+
+.export-task-detail-modal {
+    .export-detail-body {
+        color: #666;
+        padding: 30px 40px;
+    }
+    .task-title {
+        font-size: 16px;
+        line-height: 16px;
+        padding-bottom: 10px;
+    }
+    .field-area {
+        background-color: #f7f7f7;
+        max-height: 310px;
+        overflow-y: auto;
+        padding: 8px 16px;
+        line-height: 26px;
+    }
+    .field-label {
+        float: left;
+        color: #999;
+    }
+    .field-item {
+        overflow: hidden;
+        .value {
+            margin-left: 80px;
+            display: block;
+        }
+    }
+}
+
+
+/*导出任务详情modal END*/
+
+
+/*股东出资信息 START*/
+
+.shareholder-modal {
+    .shareholder-modal-content {
+        padding: 0 22px 24px;
+        margin-top: 24px;
+        color: #747474;
+        height: 340px;
+        overflow-y: auto;
+    }
+    .table-title {
+        padding-top: 20px;
+        padding-bottom: 5px;
+        font-size: 14px;
+        &.first-title {
+            padding-top: 0;
+        }
+    }
+    .shareholder-table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 12px;
+        line-height: 16px;
+        color: #666;
+        th {
+            color: #999;
+            background-color: #fbfdff;
+            text-align: center;
+            border: 1px solid #e8e6e7;
+            padding: 6px;
+        }
+        .fixed-wd-1 {
+            width: 168px;
+        }
+        .fixed-wd-2 {
+            width: 200px;
+        }
+        td {
+            text-align: center;
+            padding: 6px;
+            border: 1px solid #e8e6e7;
+        }
+    }
+}
+
+#import-result-modal {
+    .vertical-align {
+        &>* {
+            vertical-align: middle;
+        }
+        i {
+            margin-right: 8px;
+        }
+    }
+    .confirm-body .message {
+        padding: 0 24px;
+    }
+}
+
+
+/*股东出资信息 END*/
+
+#dynamic-detail-modal {
+    .modal-content {
+        padding-bottom: 16px;
+    }
+    .export-detail-body {
+        height: 392px;
+        overflow-y: auto;
+        padding: 0 16px;
+    }
+    .detail-title {
+        display: inline-block;
+        max-width: 80%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+    .msg-date-tips {
+        color: #999999;
+        font-size: 14px;
+        vertical-align: middle;
+    }
+    .map-item {
+        margin-top: 18px;
+        line-height: 1;
+    }
+    .key {
+        color: #999999;
+        font-size: 14px;
+    }
+    .value {
+        margin-top: 8px;
+        color: #333333;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    .origin-area {
+        margin-top: 32px;
+        font-size: 14px;
+        .label {
+            color: #666666;
+        }
+        .link a {
+            color: #008CFF;
+        }
+    }
+    .company-name,
+    .see-btn {
+        color: #008CFF;
+    }
+    table {
+        width: 100%;
+        font-size: 12px;
+        border-top: 1px solid #DDDDDD;
+        border-left: 1px solid #DDDDDD;
+        margin-top: 24px;
+        th,
+        td {
+            height: 30px;
+            line-height: 30px;
+            padding-left: 16px;
+            border-bottom: 1px solid #DDDDDD;
+            border-right: 1px solid #DDDDDD;
+        }
+        th {
+            background: #F7F7F7;
+            color: #999999;
+        }
+        td {
+            color: #666666;
+        }
+    }
+    .under-tips {
+        color: #999999;
+        font-size: 12px;
+        margin-top: 8px;
+    }
+    .map-tmpl {
+        padding-top: 6px;
+        .map-item {
+            margin-top: 18px;
+            line-height: 1;
+            .key {
+                color: #999999;
+                font-size: 14px;
+            }
+            .value {
+                max-width: 710px;
+                margin-top: 8px;
+                color: #333333;
+                font-size: 16px;
+            }
+        }
+    }
+    .company-list-box {
+        height: 40px;
+        line-height: 40px;
+        border: 1px solid #DDDDDD;
+        margin-top: 24px;
+        font-size: 12px;
+        .key {
+            margin-left: 16px;
+            color: #999999;
+        }
+    }
+}
+
+#judement-wenshu-detail-modal {
+    .scroll-content {
+        height: 400px;
+        overflow-y: auto;
+        font-size: 14px;
+        color: #333;
+        .case-name {
+            padding: 12px 0;
+            margin: 0 12px;
+            border-bottom: 1px solid #DDDDDD;
+        }
+        .doc-content {
+            padding: 12px;
+            color: #666;
+        }
+    }
+}
+
+// <<---- 新版监控
+#edit-monitor-modal {
+    .editMonitorContent {
+        padding: 27px 40px 0;
+    }
+    .title {
+        color: #999999;
+        font-size: 14px;
+    }
+    .sub-title {
+        color: #bdbdbd;
+        font-size: 14px;
+    }
+    .checkbox-wrap {
+        padding: 16px 0;
+        font-size: 0;
+        .my-checkbox {
+            width: 50%;
+        }
+    }
+}
+
+#remove-monitor-modal {
+    .removeMonitorContent {
+        padding: 32px;
+    }
+    .title {
+        color: #666;
+        font-size: 16px;
+        line-height: 24px;
+    }
+    .message {
+        color: #bdbdbd;
+        font-size: 12px;
+        line-height: 18px;
+        padding-top: 6px;
+    }
+}
+// 新版监控 ---->>
