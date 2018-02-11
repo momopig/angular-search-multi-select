@@ -1,5 +1,12 @@
     var demo = angular.module('searchMultiSelectDemo', ['searchMultiSelect']);
+
     demo.controller("DemoController", ['$scope', function ($scope) {
+
+        $scope.currentPro = {name: 'j', age: 12};
+        var obj = angular.extend($scope.currentPro, {name: 'test'});
+        console.log('test:' + ($scope.currentPro === obj));
+
+
         $scope.selectOptionsConfig = {
             hasAllOption:true,
             allOptionIndex: 0, // the index in tree array
@@ -15,7 +22,9 @@
                 // 如果不配置sub属性，则认为是leaf checkbox, 程序会将nodeType默认设为'leaf'
                 {name: "生活1"},
                 {name: "生活2"},
-                {name: "生活3"}
+                {name: "生活3"},
+                {name: "生活4"},
+                {name: "生活5"}
             ]
         };
     }]);

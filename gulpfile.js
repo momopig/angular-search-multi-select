@@ -14,7 +14,7 @@ var connect = require('gulp-connect');
 var jsSrc = './src/.dist_js/*.js',
     jsSrcMap = './src/.dist_js/*.map',
     jsDist = './dist/js',
-    publishDist = './publish/dist',
+    docsDist = './docs/js',
 
     condition = false;
 
@@ -45,14 +45,14 @@ gulp.task('devJs', function () {
     return gulp.src(jsSrc)
         .pipe(gulpif(condition, rev()))
         .pipe(gulp.dest(jsDist))
-        .pipe(gulp.dest(publishDist))
+        .pipe(gulp.dest(docsDist))
         .pipe(gulpif(condition, rev.manifest()))
         .pipe(gulpif(condition, gulp.dest('./src/.rev/js')));
 });
 gulp.task('devJsSourceMap', function() {
     return gulp.src(jsSrcMap)
         .pipe(gulp.dest(jsDist))
-        .pipe(gulp.dest(publishDist));
+        .pipe(gulp.dest(docsDist));
 })
 
 //对文件修改的舰艇，实现修改即自动编译
@@ -85,15 +85,8 @@ gulp.task('demo', function (done) {
 
 gulp.task('connect', function () {
     connect.server({
-        root: ['./demo', './node_modules', './dist'],
+        root: ['./docs', './node_modules', './dist'],
         debug: true,
         port: 8082
     });
 });
-
-
-
-
-
-
-

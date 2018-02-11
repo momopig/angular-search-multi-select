@@ -2,10 +2,10 @@
 <html ng-app="searchMultiSelectDemo">
 <head>
     <title>searchMultiSelect Editor Demo</title>
-    <link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css"/>
-    <link rel="stylesheet" type="text/css" href="demo.css"/>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/demo.css"/>
 </head>
 <body>
 
@@ -27,14 +27,15 @@
             <!--</div>-->
         <!--</div>-->
     <!--</div>-->
-    <search-multi-select select-options-config="selectOptionsConfig" style="width:500px;"></search-multi-select>
+    <search-multi-select conf="currentPro" select-options-config="selectOptionsConfig" style="width:500px;"></search-multi-select>
 </div>
-
-<script type="text/javascript" src="angular/angular.min.js"></script>
-<script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.6.8/angular.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
 <script type="text/javascript" src="js/angular-search-multi-select.js"></script>
-<script type="text/javascript" src="demo.js"></script>
+<script type="text/javascript" src="js/demo.js"></script>
 
 </body>
 </html>
